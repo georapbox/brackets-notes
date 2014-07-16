@@ -285,11 +285,13 @@ define(function (require, exports, module) {
                     renderNotes();
                 }
             }).
-            on('dblclick', 'td.note textarea', function () {
-                if ($(this).height() === 20) {
-                    $(this).height($(this)[0].scrollHeight);
+            on('click', 'td.note .resize', function () {
+                var textarea = $(this).next();
+                
+                if (textarea.height() === 53) {
+                    textarea.height(textarea[0].scrollHeight);
                 } else {
-                    $(this).css({height: '20px'});
+                    textarea.css({height: '53px'});
                 }
                 
             }).
