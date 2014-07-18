@@ -8,7 +8,7 @@
 
 /* Panel */
 /* Panel header */
-#georapbox-new-note-btn {
+#georapbox-notes-new-btn {
     font-size: 11px;
     position: absolute;
 	top: 2px;
@@ -18,7 +18,7 @@
     color: #959595;
     cursor: pointer;
 }
-#georapbox-new-note-btn:hover {
+#georapbox-notes-new-btn:hover {
     background: #ffffff;
 }
 #georapbox-notes-panel header h1 {
@@ -129,8 +129,16 @@
 }
 
 /* New Note Dialog */
-#georapbox-new-note-textarea {
+.georapbox-notes-new-note-dialog textarea {
     width: 97%;
     height: 100px;
     resize: vertical;
+}
+
+/* Delete Note Dialog */
+.georapbox-notes-delete-note-dialog .modal-body div {
+    padding: 10px;
+    border: 1px solid #cecece;
+    border-radius:5px;
+    background-color: #d8d8d8;
 }

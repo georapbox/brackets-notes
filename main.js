@@ -41,6 +41,7 @@ define(function (require, exports, module) {
         notesPanelTemplate = require('text!html/notes-panel.html'),
         notesRowTemplate = require('text!html/notes-row.html'),
         newNoteTemplate = require("text!html/notes-new.html"),
+        deleteNoteTemplate = require("text!html/delete-note.html"),
         panel,
         notesPanel,
         
@@ -91,7 +92,7 @@ define(function (require, exports, module) {
             ts = date.getTime(),
             dateFormatted = date.toLocaleString();
         
-        if (val !== '') {
+        if ($.trim(val) !== '') {
             _notes.push({
                 id: ts,
                 date: dateFormatted,
@@ -166,7 +167,7 @@ define(function (require, exports, module) {
     
     /*
      * Renders notes inside bottom panel.
-    */
+     */
     function renderNotes() {
         if (panel.isVisible()) {
             var notesTable = notesPanel.find('table tbody'),
@@ -186,8 +187,8 @@ define(function (require, exports, module) {
     }
 
     /**
-    * Shows dialog for new note.
-    */
+     * Shows dialog for new note.
+     */
     function showNewNoteModal() {
         var dialog,
             noteTextarea,
@@ -197,7 +198,7 @@ define(function (require, exports, module) {
 			.done(function (id) {
                 // if button OK clicked
                 if (id === Dialogs.DIALOG_BTN_OK) {
-                    noteTextarea = dialog.find('#georapbox-new-note-textarea');
+                    noteTextarea = dialog.find('textarea');
                     noteValue = noteTextarea.val();
                     
 					saveNote(noteValue, function () {
@@ -206,7 +207,29 @@ define(function (require, exports, module) {
                 }
 			});
         
-        dialog = $('.notes-dialog.instance');
+        dialog = $('.georapbox-notes-new-note-dialog.instance');
+        return promise;
+    }
+    
+    /**
+     * Shows dialog for removing note.
+     */
+    function showDeleteNoteDialog(noteId, noteDate, noteText, callback) {
+        var dialog;
+        
+        var promise = Dialogs.showModalDialogUsingTemplate(Mustache.render(deleteNoteTemplate, Strings))
+			.done(function (id) {
+                // if button OK clicked
+                if (id === Dialogs.DIALOG_BTN_OK) {
+                    if (typeof callback === 'function' && typeof callback !== 'undefined') {
+                        callback();
+                    }
+                }
+			});
+        
+        dialog = $('.georapbox-notes-delete-note-dialog.instance');
+        dialog.find('.date').html(noteDate);
+        dialog.find('.note').html(noteText.substring(0, 200) + '...');
         return promise;
     }
     
@@ -258,12 +281,19 @@ define(function (require, exports, module) {
         
         notesPanel.on('click', '.close', togglePanel).
             on('click', 'td.delete a', function () {
-                var id = $(this).parent().next().html();
+                var container = $(this).parent().parent(),
+                    id = container.find('.id').html(),
+                    date = container.find('.labelIcon').html(),
+                    note = container.find('.note textarea').val();
+                
                 id = parseInt(id, 10);
-                deleteNote(id);
-                localStorage.removeItem('georapbox.notes');
-                localStorage.setObj('georapbox.notes', _notes);
-                renderNotes();
+                
+                showDeleteNoteDialog(id, date, note, function () {
+                    deleteNote(id);
+                    localStorage.removeItem('georapbox.notes');
+                    localStorage.setObj('georapbox.notes', _notes);
+                    renderNotes();
+                });
             }).
             on('click', 'td.edit a', function () {
                 var textArea = $(this).parent().parent().find('textarea');
@@ -295,7 +325,7 @@ define(function (require, exports, module) {
                 }
                 
             }).
-            on('click', '#georapbox-new-note-btn', showNewNoteModal);
+            on('click', '#georapbox-notes-new-btn', showNewNoteModal);
         
         noteIcon.on('click', togglePanel).
             appendTo('#main-toolbar .buttons');
