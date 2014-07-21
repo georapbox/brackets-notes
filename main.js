@@ -25,9 +25,9 @@
 /*jslint vars: true, plusplus: true, devel: true, nomen: true, regexp: true, indent: 4, maxerr: 50 */
 /*global define, $, Mustache, brackets, window */
 
-define(function (require, exports, module) {
+define(function (require, exports, module, showdown) {
     'use strict';
-
+    
     var CommandManager = brackets.getModule('command/CommandManager'),
         Dialogs = brackets.getModule('widgets/Dialogs'),
         Strings = brackets.getModule("strings"),
@@ -40,38 +40,22 @@ define(function (require, exports, module) {
         noteIcon = $('<a title="Notes" id="georapbox-notes-icon"></a>'),
         notesPanelTemplate = require('text!html/notes-panel.html'),
         notesRowTemplate = require('text!html/notes-row.html'),
-        newNoteTemplate = require("text!html/notes-new.html"),
-        deleteNoteTemplate = require("text!html/delete-note.html"),
+        newNoteTemplate = require('text!html/notes-new.html'),
+        deleteNoteTemplate = require('text!html/delete-note.html'),
+        marked = require('lib/marked'),
         panel,
         notesPanel,
-        
         COMMAND_ID = 'georapbox_notes',
-        
         _activeEditor = null,
         _activeDocument = null,
         _notes = localStorage.getObj('georapbox.notes') || [];
-    
-    /**    
-     * Description: Replace an object's value with undefined if meets condition.
-     *              It is used when saving an object to localStorage to avoid circular reference.
-     * @param {String} key
-     * @param {Object} value
-     * @returns {Object} undefined || value    
-     */
-    var replacer = function (key, value) {
-        if (key === 'bookmark') {
-            return undefined;
-        } else {
-            return value;
-        }
-    };
     
     /**
      * Extends Storage to save objects.
      */
     if (!Storage.prototype.setObj) {
         Storage.prototype.setObj = function (key, obj) {
-            return this.setItem(key, JSON.stringify(obj, replacer));
+            return this.setItem(key, JSON.stringify(obj));
         };
     }
     
@@ -87,16 +71,17 @@ define(function (require, exports, module) {
     /**
      * Saves notes to localStorage.
      */
-    function saveNote(val, callback) {
+    function saveNote(val, markup, callback) {
         var date = new Date(),
             ts = date.getTime(),
             dateFormatted = date.toLocaleString();
         
         if ($.trim(val) !== '') {
-            _notes.push({
+            _notes.unshift({
                 id: ts,
                 date: dateFormatted,
-                note: val
+                note: val,
+                noteMarkup: markup
             });
 
             localStorage.setObj('georapbox.notes', _notes);
@@ -127,7 +112,7 @@ define(function (require, exports, module) {
     /**    
      * Updates note.    
      */
-    function updateNote(noteId, noteVal) {
+    function updateNote(noteId, noteVal, noteMarkup) {
         var i = 0,
             len = _notes.length,
             note,
@@ -142,6 +127,7 @@ define(function (require, exports, module) {
                     note.id = date.getTime();
                     note.date = date.toLocaleString();
                     note.note = noteVal;
+                    note.noteMarkup = noteMarkup;
                     return _notes;
                 }
             }
@@ -192,7 +178,9 @@ define(function (require, exports, module) {
     function showNewNoteModal() {
         var dialog,
             noteTextarea,
-            noteValue;
+            noteValue,
+            noteHtml,
+            preview;
         
         var promise = Dialogs.showModalDialogUsingTemplate(Mustache.render(newNoteTemplate, Strings))
 			.done(function (id) {
@@ -200,14 +188,37 @@ define(function (require, exports, module) {
                 if (id === Dialogs.DIALOG_BTN_OK) {
                     noteTextarea = dialog.find('textarea');
                     noteValue = noteTextarea.val();
+                    noteHtml = dialog.find('div[data-id="georapbox-new-note-preview"]').html();
                     
-					saveNote(noteValue, function () {
+                    saveNote(noteValue, noteHtml, function () {
                         renderNotes();
                     });
+                    
+                    dialog.unbind('keyup');
+                }
+                
+                // if button CANCEL clicked
+                if (id === Dialogs.DIALOG_BTN_CANCEL) {
+                    dialog.unbind('keyup');
                 }
 			});
         
         dialog = $('.georapbox-notes-new-note-dialog.instance');
+        preview = $('div[data-id="georapbox-new-note-preview"]');
+        
+        function previewMarkDown(noteMarkup) {
+            preview.html(marked(noteMarkup.val()));
+        }
+        
+        noteTextarea = dialog.find('textarea');
+        noteTextarea.focus();
+        
+        dialog.on('keyup', 'textarea', function () {
+            previewMarkDown($(this));
+        }).scroll(function () {
+            console.log('scroll');
+        });
+        
         return promise;
     }
     
@@ -281,10 +292,10 @@ define(function (require, exports, module) {
         
         notesPanel.on('click', '.close', togglePanel).
             on('click', 'td.delete a', function () {
-                var container = $(this).parent().parent(),
-                    id = container.find('.id').html(),
-                    date = container.find('.labelIcon').html(),
-                    note = container.find('.note textarea').val();
+                var tableRow = $(this).parent().parent(),
+                    id = tableRow.find('.id').html(),
+                    date = tableRow.find('.labelIcon').html(),
+                    note = tableRow.find('.note textarea').val();
                 
                 id = parseInt(id, 10);
                 
@@ -296,36 +307,39 @@ define(function (require, exports, module) {
                 });
             }).
             on('click', 'td.edit a', function () {
-                var textArea = $(this).parent().parent().find('textarea');
+                var tableRow = $(this).parent().parent(),
+                    textArea = tableRow.find('textarea'),
+                    textareaTd = tableRow.find('.note'),
+                    previewTd = tableRow.find('.preview');
+                
+                textareaTd.show();
+                previewTd.hide();
                 makeEditable(textArea);
             }).
             on('focusout', 'td.note textarea', function () {
                 var self = $(this),
                     noteValue,
+                    noteMarkup,
+                    markupArea = self.parent().parent().find('section'),
                     noteId;
+                
+                function previewMarkDown() {
+                    markupArea.html(marked(self.val()));
+                }
 
                 if (self.hasClass('editable')) {
                     noteValue = self.val();
                     noteId = parseInt(self.parent().parent().find('td.id').html(), 10);
-
                     makeReadOnly(self);
-                    updateNote(noteId, noteValue);
+                    previewMarkDown();
+                    noteMarkup = self.parent().next().find('section').html();
+                    updateNote(noteId, noteValue, noteMarkup);
                     localStorage.removeItem('georapbox.notes');
                     localStorage.setObj('georapbox.notes', _notes);
                     renderNotes();
                 }
             }).
-            on('click', 'td.note .resize', function () {
-                var textarea = $(this).next();
-                
-                if (textarea.height() === 53) {
-                    textarea.height(textarea[0].scrollHeight);
-                } else {
-                    textarea.css({height: '53px'});
-                }
-                
-            }).
-            on('click', '#georapbox-notes-new-btn', showNewNoteModal);
+            on('click', '[data-id="georapbox-notes-new-btn"]', showNewNoteModal);
         
         noteIcon.on('click', togglePanel).
             appendTo('#main-toolbar .buttons');

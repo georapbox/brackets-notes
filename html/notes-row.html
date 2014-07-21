@@ -1,7 +1,8 @@
 {{#notes}}
     <tr>
         <td class="date"><div class="labelIcon">{{date}}</div></td>
-        <td class="note"><a href="#" class="resize"></a><textarea readonly>{{note}}</textarea></td>
+        <td class="note"><textarea readonly>{{note}}</textarea></td>
+        <td class="preview"><section contenteditable="true">{{{noteMarkup}}}</section></td>
         <td class="edit"><a href="#" title="Edit">Edit</a></td>
         <td class="delete"><a href="#" class="remove" title="Delete">&times;</a></td>
         <td class="id">{{id}}</td>
