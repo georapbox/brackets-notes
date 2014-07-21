@@ -10,7 +10,7 @@ If you have a previous version installed (eg. 0.1.0, 0.1.1, 0.1.2), it is recomm
 3. Proceed to the update.
 4. Add your notes with Markdown syntax.
 
-_**For anayone who prefers the older version of the extension, this can be found [here](http://https://github.com/georapbox/brackets-notes-outdated).**_
+_**For anayone who prefers the older version of the extension, this can be found [here](https://github.com/georapbox/brackets-notes-outdated).**_
 
 \* This small extension was firstly developed for my personal projects' needs but I thought I should share for anyone that might find it useful.
 
