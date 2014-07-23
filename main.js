@@ -52,24 +52,28 @@ define(function (require, exports, module, showdown) {
     
     /**
      * Extends Storage to save objects.
+     * @param storage {Object} - Web storage (localStorage/sessionStorage)
+     * @param key {String} - object's key
+     * @param obj {Object} - object ot save
      */
-    if (!Storage.prototype.setObj) {
-        Storage.prototype.setObj = function (key, obj) {
-            return this.setItem(key, JSON.stringify(obj));
-        };
+    function storageSaveObj(storage, key, obj) {
+        return storage.setItem(key, JSON.stringify(obj));
     }
     
     /**
      * Extends Storage to retrieve objects.
+     * @param storage {Object} - Web storage (localStorage/sessionStorage)
+     * @param key {String} - object's key
      */
-    if (!Storage.prototype.getObj) {
-        Storage.prototype.getObj = function (key) {
-            return JSON.parse(this.getItem(key));
-        };
+    function storageGetObj(storage, key) {
+        return JSON.parse(storage.getItem(key));
     }
     
     /**
      * Saves notes to localStorage.
+     * @param val {String} - note (Markdown)
+     * @param markup {String} - note (HTML markup)
+     * param callback {Function}
      */
     function saveNote(val, markup, callback) {
         var date = new Date(),
@@ -84,7 +88,7 @@ define(function (require, exports, module, showdown) {
                 noteMarkup: markup
             });
 
-            localStorage.setObj('georapbox.notes', _notes);
+            storageSaveObj(localStorage, 'georapbox.notes', _notes);
 
             if (typeof callback === 'function' && typeof callback !== 'undefined') {
                 callback();
@@ -93,7 +97,8 @@ define(function (require, exports, module, showdown) {
     }
     
     /**
-     * Deletes note.
+     * Deletes note by note id.
+     * @param noteId {Number}
      */
     function deleteNote(noteId) {
         var i = 0,
@@ -110,7 +115,10 @@ define(function (require, exports, module, showdown) {
     }
     
     /**    
-     * Updates note.    
+     * Updates note.
+     * @param noteId {Number}
+     * @param noteVal {String} - note (Markdown)
+     * @param noteMarkup {String} - note (HTML markup)
      */
     function updateNote(noteId, noteVal, noteMarkup) {
         var i = 0,
@@ -135,7 +143,8 @@ define(function (require, exports, module, showdown) {
     }
     
     /**
-     * Make note editable.
+     * Makes note textarea editable.
+     # @param textarea {Node}
      */
     function makeEditable(textarea) {
         textarea.prop('readonly', false);
@@ -144,7 +153,8 @@ define(function (require, exports, module, showdown) {
     }
     
     /**
-     * Make note read only
+     * Makes note textarea read only.
+     * @param textarea {Node}
      */
     function makeReadOnly(textarea) {
         textarea.prop('readonly', true);
@@ -224,6 +234,10 @@ define(function (require, exports, module, showdown) {
     
     /**
      * Shows dialog for removing note.
+     * @param noteId {Number}
+     * @param noteDate {String}
+     * @param noteText {String}
+     * @param callback {Function}
      */
     function showDeleteNoteDialog(noteId, noteDate, noteText, callback) {
         var dialog;
@@ -302,7 +316,7 @@ define(function (require, exports, module, showdown) {
                 showDeleteNoteDialog(id, date, note, function () {
                     deleteNote(id);
                     localStorage.removeItem('georapbox.notes');
-                    localStorage.setObj('georapbox.notes', _notes);
+                    storageSaveObj(localStorage, 'georapbox.notes', _notes);
                     renderNotes();
                 });
             }).
@@ -335,7 +349,7 @@ define(function (require, exports, module, showdown) {
                     noteMarkup = self.parent().next().find('section').html();
                     updateNote(noteId, noteValue, noteMarkup);
                     localStorage.removeItem('georapbox.notes');
-                    localStorage.setObj('georapbox.notes', _notes);
+                    storageSaveObj(localStorage, 'georapbox.notes', _notes);
                     renderNotes();
                 }
             }).
