@@ -22,33 +22,11 @@
  *
  */
 
-/*jslint vars: true, plusplus: true, devel: true, nomen: true, regexp: true, indent: 4, maxerr: 50 */
-/*global define, $, Mustache, brackets, window */
+/*jslint nomen: true */
+/*global define, $, Mustache, brackets */
 
 define(function (require, exports, module, showdown) {
     'use strict';
-    
-    var CommandManager = brackets.getModule('command/CommandManager'),
-        Dialogs = brackets.getModule('widgets/Dialogs'),
-        Strings = brackets.getModule("strings"),
-        Menus = brackets.getModule('command/Menus'),
-        KeyBindingManager = brackets.getModule('command/KeyBindingManager'),
-        ExtensionUtils = brackets.getModule('utils/ExtensionUtils'),
-        PanelManager = brackets.getModule('view/PanelManager'),
-        AppInit = brackets.getModule('utils/AppInit'),
-        
-        noteIcon = $('<a title="Notes" id="georapbox-notes-icon"></a>'),
-        notesPanelTemplate = require('text!html/notes-panel.html'),
-        notesRowTemplate = require('text!html/notes-row.html'),
-        newNoteTemplate = require('text!html/notes-new.html'),
-        deleteNoteTemplate = require('text!html/delete-note.html'),
-        marked = require('lib/marked'),
-        panel,
-        notesPanel,
-        COMMAND_ID = 'georapbox_notes',
-        _activeEditor = null,
-        _activeDocument = null,
-        _notes = localStorage.getObj('georapbox.notes') || [];
     
     /**
      * Extends Storage to save objects.
@@ -68,6 +46,27 @@ define(function (require, exports, module, showdown) {
     function storageGetObj(storage, key) {
         return JSON.parse(storage.getItem(key));
     }
+    
+    var CommandManager = brackets.getModule('command/CommandManager'),
+        Dialogs = brackets.getModule('widgets/Dialogs'),
+        Strings = brackets.getModule('strings'),
+        Menus = brackets.getModule('command/Menus'),
+        KeyBindingManager = brackets.getModule('command/KeyBindingManager'),
+        ExtensionUtils = brackets.getModule('utils/ExtensionUtils'),
+        PanelManager = brackets.getModule('view/PanelManager'),
+        AppInit = brackets.getModule('utils/AppInit'),
+        
+        noteIcon = $('<a title="Notes" id="georapbox-notes-icon"></a>'),
+        notesPanelTemplate = require('text!html/notes-panel.html'),
+        notesRowTemplate = require('text!html/notes-row.html'),
+        newNoteTemplate = require('text!html/notes-new.html'),
+        deleteNoteTemplate = require('text!html/delete-note.html'),
+        marked = require('lib/marked'),
+        panel,
+        notesPanel,
+        _activeEditor = null,
+        _activeDocument = null,
+        _notes = storageGetObj(localStorage, 'georapbox.notes') || [];
     
     /**
      * Saves notes to localStorage.
@@ -144,7 +143,7 @@ define(function (require, exports, module, showdown) {
     
     /**
      * Makes note textarea editable.
-     # @param textarea {Node}
+     * @param textarea {Node}
      */
     function makeEditable(textarea) {
         textarea.prop('readonly', false);
@@ -170,11 +169,10 @@ define(function (require, exports, module, showdown) {
                 notesRowsLen = 0,
                 lineColumn,
                 fileColumn,
-                file;
-            
-            var resultsHTML = Mustache.render(notesRowTemplate, {
-                notes: _notes
-            });
+                file,
+                resultsHTML = Mustache.render(notesRowTemplate, {
+                    notes: _notes
+                });
 
             notesTable.empty().append(resultsHTML);
         }
@@ -190,28 +188,27 @@ define(function (require, exports, module, showdown) {
             noteTextarea,
             noteValue,
             noteHtml,
-            preview;
-        
-        var promise = Dialogs.showModalDialogUsingTemplate(Mustache.render(newNoteTemplate, Strings))
-			.done(function (id) {
-                // if button OK clicked
-                if (id === Dialogs.DIALOG_BTN_OK) {
-                    noteTextarea = dialog.find('textarea');
-                    noteValue = noteTextarea.val();
-                    noteHtml = dialog.find('div[data-id="georapbox-new-note-preview"]').html();
-                    
-                    saveNote(noteValue, noteHtml, function () {
-                        renderNotes();
-                    });
-                    
-                    dialog.unbind('keyup');
-                }
-                
-                // if button CANCEL clicked
-                if (id === Dialogs.DIALOG_BTN_CANCEL) {
-                    dialog.unbind('keyup');
-                }
-			});
+            preview,
+            promise = Dialogs.showModalDialogUsingTemplate(Mustache.render(newNoteTemplate, Strings))
+                .done(function (id) {
+                    // if button OK clicked
+                    if (id === Dialogs.DIALOG_BTN_OK) {
+                        noteTextarea = dialog.find('textarea');
+                        noteValue = noteTextarea.val();
+                        noteHtml = dialog.find('div[data-id="georapbox-new-note-preview"]').html();
+
+                        saveNote(noteValue, noteHtml, function () {
+                            renderNotes();
+                        });
+
+                        dialog.unbind('keyup');
+                    }
+
+                    // if button CANCEL clicked
+                    if (id === Dialogs.DIALOG_BTN_CANCEL) {
+                        dialog.unbind('keyup');
+                    }
+                });
         
         dialog = $('.georapbox-notes-new-note-dialog.instance');
         preview = $('div[data-id="georapbox-new-note-preview"]');
@@ -225,8 +222,6 @@ define(function (require, exports, module, showdown) {
         
         dialog.on('keyup', 'textarea', function () {
             previewMarkDown($(this));
-        }).scroll(function () {
-            console.log('scroll');
         });
         
         return promise;
@@ -240,17 +235,16 @@ define(function (require, exports, module, showdown) {
      * @param callback {Function}
      */
     function showDeleteNoteDialog(noteId, noteDate, noteText, callback) {
-        var dialog;
-        
-        var promise = Dialogs.showModalDialogUsingTemplate(Mustache.render(deleteNoteTemplate, Strings))
-			.done(function (id) {
-                // if button OK clicked
-                if (id === Dialogs.DIALOG_BTN_OK) {
-                    if (typeof callback === 'function' && typeof callback !== 'undefined') {
-                        callback();
+        var dialog,
+            promise = Dialogs.showModalDialogUsingTemplate(Mustache.render(deleteNoteTemplate, Strings))
+                .done(function (id) {
+                    // if button OK clicked
+                    if (id === Dialogs.DIALOG_BTN_OK) {
+                        if (typeof callback === 'function' && typeof callback !== 'undefined') {
+                            callback();
+                        }
                     }
-                }
-			});
+                });
         
         dialog = $('.georapbox-notes-delete-note-dialog.instance');
         dialog.find('.date').html(noteDate);
