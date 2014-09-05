@@ -1,3 +1,6 @@
+/*jslint devel: true, nomen: true*/
+/*global define, $, Mustache, brackets */
+
 /*
  * The MIT License (MIT)
  * Copyright (c) 2014 George Raptis. All rights reserved.
@@ -21,9 +24,6 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
-
-/*jslint nomen: true */
-/*global define, $, Mustache, brackets */
 
 define(function (require, exports, module, showdown) {
     'use strict';
@@ -61,6 +61,7 @@ define(function (require, exports, module, showdown) {
         notesRowTemplate = require('text!html/notes-row.html'),
         newNoteTemplate = require('text!html/notes-new.html'),
         deleteNoteTemplate = require('text!html/delete-note.html'),
+        Reorder = require('services/reorder'),
         marked = require('lib/marked'),
         panel,
         notesPanel,
@@ -80,7 +81,7 @@ define(function (require, exports, module, showdown) {
             dateFormatted = date.toLocaleString();
         
         if ($.trim(val) !== '') {
-            _notes.unshift({
+            _notes.push({
                 id: ts,
                 date: dateFormatted,
                 note: val,
@@ -100,6 +101,8 @@ define(function (require, exports, module, showdown) {
      * @param noteId {Number}
      */
     function deleteNote(noteId) {
+        console.log(noteId);
+        
         var i = 0,
             len = _notes.length,
             note;
@@ -148,6 +151,7 @@ define(function (require, exports, module, showdown) {
     function makeEditable(textarea) {
         textarea.prop('readonly', false);
         textarea.addClass('editable');
+        textarea.height(textarea[0].scrollHeight);
         textarea.focus();
     }
     
@@ -260,11 +264,13 @@ define(function (require, exports, module, showdown) {
             panel.hide();
             noteIcon.removeClass('active');
             CommandManager.get('georapbox.notes.viewNotes').setChecked(false);
+            localStorage.setItem('georapbox.notes.visible', 'false');
         } else {
             panel.show();
             noteIcon.addClass('active');
             CommandManager.get('georapbox.notes.viewNotes').setChecked(true);
             renderNotes();
+            localStorage.setItem('georapbox.notes.visible', 'true');
         }
     }
     
@@ -298,7 +304,8 @@ define(function (require, exports, module, showdown) {
     function addHandlers() {
         notesPanel = $('#georapbox-notes-panel');
         
-        notesPanel.on('click', '.close', togglePanel).
+        notesPanel.
+            on('click', '.close', togglePanel).
             on('click', 'td.delete a', function () {
                 var tableRow = $(this).parent().parent(),
                     id = tableRow.find('.id').html(),
@@ -328,7 +335,7 @@ define(function (require, exports, module, showdown) {
                 var self = $(this),
                     noteValue,
                     noteMarkup,
-                    markupArea = self.parent().parent().find('section'),
+                    markupArea = self.parent().parent().find('article'),
                     noteId;
                 
                 function previewMarkDown() {
@@ -340,14 +347,51 @@ define(function (require, exports, module, showdown) {
                     noteId = parseInt(self.parent().parent().find('td.id').html(), 10);
                     makeReadOnly(self);
                     previewMarkDown();
-                    noteMarkup = self.parent().next().find('section').html();
+                    noteMarkup = self.parent().next().find('article').html();
                     updateNote(noteId, noteValue, noteMarkup);
                     localStorage.removeItem('georapbox.notes');
                     storageSaveObj(localStorage, 'georapbox.notes', _notes);
                     renderNotes();
                 }
             }).
-            on('click', '[data-id="georapbox-notes-new-btn"]', showNewNoteModal);
+            on('click', '[data-id="georapbox-notes-new-btn"]', showNewNoteModal).
+            on('dragstart', 'tr', Reorder.dragndrop.handleDragStart).
+            on('dragenter', 'tr', Reorder.dragndrop.handleDragEnter).
+            on('dragover', 'tr', Reorder.dragndrop.handleDragOver).
+            on('dragleave', 'tr', Reorder.dragndrop.handleDragLeave).
+            on('drop', 'tr', Reorder.dragndrop.handleDrop).
+            on('dragend', 'tr', function () {
+                var rows = notesPanel.find('tr');
+            
+                Reorder.dragndrop.handleDragEnd(rows);
+                
+                _notes = [];
+            
+                rows.each(function (idx) {
+                    var row = $(this),
+                        id = row.find('td.id').html(),
+                        date = row.find('td.date .labelIcon').html(),
+                        note = row.find('td.note textarea').html(),
+                        noteMarkup = row.find('td.preview article').html();
+                        
+                    console.log(id);
+                    console.log(date);
+                    console.log(note);
+                    console.log(noteMarkup);
+                    console.log('===================================');
+                    
+                    _notes.push({
+                        id: parseInt(id, 10),
+                        date: date,
+                        note: note,
+                        noteMarkup: noteMarkup
+                    });
+                });
+            
+                console.log(_notes);
+                
+                storageSaveObj(localStorage, 'georapbox.notes', _notes);
+            });
         
         noteIcon.on('click', togglePanel).
             appendTo('#main-toolbar .buttons');
@@ -361,5 +405,8 @@ define(function (require, exports, module, showdown) {
         addStyles();
         addMenuCommands();
         addHandlers();
+        if (localStorage.getItem('georapbox.notes.visible') === 'true') {
+            togglePanel();
+        }
     });
 });

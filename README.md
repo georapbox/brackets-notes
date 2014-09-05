@@ -2,16 +2,6 @@
 
 Extension for [Brackets](https://github.com/adobe/brackets) that allows the user to easily add and manage notes, with [Markdown](http://daringfireball.net/projects/markdown/) support.\*
 
-**<ins>IMPORTANT:</ins>** After adding Markdown support, it was a little difficult to also support the old format, so there is a possibility that your already saved notes will not work properly with the new version.
-If you have a previous version installed (eg. 0.1.0, 0.1.1, 0.1.2), it is recommended to:
-
-1. Backup your saved notes.
-2. Delete them.
-3. Proceed to the update.
-4. Add your notes with Markdown syntax.
-
-_**For anayone who prefers the older version of the extension, this can be found [here](https://github.com/georapbox/brackets-notes-outdated).**_
-
 \* This small extension was firstly developed for my personal projects' needs but I thought I should share for anyone that might find it useful.
 
 **Tested with Brackets Sprint >=37**
@@ -31,6 +21,27 @@ _**For anayone who prefers the older version of the extension, this can be found
 1. Under main menu select **View > Notes** or use the shortcut **"CTRL+ALT+Shift+N"** or click the **"Notes" icon** on the extension toolbar to open the Notes Panel.
 2. Click on the "NEW NOTE" button to open the dialog, type your note and click "Save".
 3. You can edit a note by clicking on the "Edit" icon or delete it by clicking on the "X" icon.
+4. Reorder the notes with drag and drop.
 
 ### Further info
 - At the time being all notes are stored to Web Storage.
+
+## Changelog
+###1.0.1
+- Drag and drop to reorder notes.
+- Remember if notes panel is visible or not.
+- Refactor styles to conform with dark theme after Bracket's update to v0.43.
+
+###1.0.0
+- Add Markdown support.
+- Refactor notes object structure.
+
+###0.1.2
+- Alert message when deleting note.
+- UI updates.
+
+###0.1.1
+- Bug fixing
+
+###0.1.0
+- Initial release.

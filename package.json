@@ -1,9 +1,9 @@
 {
     "name": "georapbox.brackets-notes",
     "title": "Notes",
-    "description": "Easily add and manage notes. WARNING: This version supports Markdown syntax. Therefore, the notes format is not compatible with that of the previous version. It is suggested that you backup your previous notes, delete them and then proceed to update. For more information, please refer to the Github repo.",
+    "description": "Easily add and manage notes.",
     "homepage": "https://github.com/georapbox/brackets-notes",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": "George Raptis <georapbox@gmail.com> (http://georap.gr)",
     "license": "MIT",
     "repository": {
