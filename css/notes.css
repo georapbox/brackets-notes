@@ -95,6 +95,9 @@ button[data-id="georapbox-notes-new-btn"]:hover {
     border: 1px solid #BBBBBB;
     outline: 0;
 }
+#georapbox-notes-panel table td.preview article strong {
+    color: #121212;
+}
 #georapbox-notes-panel table td.id {
     display: none;
 }
@@ -171,6 +174,9 @@ button[data-id="georapbox-notes-new-btn"]:hover {
     box-sizing: border-box;
     overflow: scroll;
     resize: vertical;
+}
+.georapbox-notes-new-note-dialog div[data-id="georapbox-new-note-preview"] strong {
+    color: #121212;
 }
 .georapbox-notes-new-note-dialog div[data-id="georapbox-new-note-preview"]:empty:not(:focus):before {
     content: attr(data-ph);
