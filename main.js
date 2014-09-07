@@ -54,6 +54,7 @@ define(function (require, exports, module, showdown) {
         KeyBindingManager = brackets.getModule('command/KeyBindingManager'),
         ExtensionUtils = brackets.getModule('utils/ExtensionUtils'),
         PanelManager = brackets.getModule('view/PanelManager'),
+        DocumentManager = brackets.getModule('document/DocumentManager'),
         AppInit = brackets.getModule('utils/AppInit'),
         
         noteIcon = $('<a title="Notes" id="georapbox-notes-icon"></a>'),
@@ -70,6 +71,17 @@ define(function (require, exports, module, showdown) {
         _notes = storageGetObj(localStorage, 'georapbox.notes') || [];
     
     /**
+     * Creates a new untitled file and appends content.
+     */
+    function openFile(content, fileExtension) {
+        var counter = 1,
+            doc = DocumentManager.createUntitledDocument(counter, fileExtension);
+
+        DocumentManager.setCurrentDocument(doc);
+        doc.setText(content);
+    }
+    
+    /**
      * Saves notes to localStorage.
      * @param val {String} - note (Markdown)
      * @param markup {String} - note (HTML markup)
@@ -81,7 +93,7 @@ define(function (require, exports, module, showdown) {
             dateFormatted = date.toLocaleString();
         
         if ($.trim(val) !== '') {
-            _notes.push({
+            _notes.unshift({
                 id: ts,
                 date: dateFormatted,
                 note: val,
@@ -101,8 +113,6 @@ define(function (require, exports, module, showdown) {
      * @param noteId {Number}
      */
     function deleteNote(noteId) {
-        console.log(noteId);
-        
         var i = 0,
             len = _notes.length,
             note;
@@ -306,8 +316,10 @@ define(function (require, exports, module, showdown) {
         
         notesPanel.
             on('click', '.close', togglePanel).
-            on('click', 'td.delete a', function () {
-                var tableRow = $(this).parent().parent(),
+            on('click', '.georapbox-notes-delete', function (e) {
+                e.preventDefault();
+            
+                var tableRow = $(this).parents('tr'),
                     id = tableRow.find('.id').html(),
                     date = tableRow.find('.labelIcon').html(),
                     note = tableRow.find('.note textarea').val();
@@ -321,8 +333,8 @@ define(function (require, exports, module, showdown) {
                     renderNotes();
                 });
             }).
-            on('click', 'td.edit a', function () {
-                var tableRow = $(this).parent().parent(),
+            on('click', '.georapbox-notes-edit', function () {
+                var tableRow = $(this).parents('tr'),
                     textArea = tableRow.find('textarea'),
                     textareaTd = tableRow.find('.note'),
                     previewTd = tableRow.find('.preview');
@@ -355,6 +367,24 @@ define(function (require, exports, module, showdown) {
                 }
             }).
             on('click', '[data-id="georapbox-notes-new-btn"]', showNewNoteModal).
+            on('click', '.georapbox-notes-options-handler', function (e) {
+                e.preventDefault();
+                var options = $(this).next();
+                
+                if (options.is(':visible')) {
+                    $(this).removeClass('active');
+                    options.hide();
+                } else {
+                    $(this).addClass('active');
+                    options.show();
+                }
+            
+            }).
+            on('click', '.georapbox-notes-extract', function (e) {
+                e.preventDefault();
+                var textareaVal = $(this).parents('tr').find('td.note textarea').val();
+                openFile(textareaVal, '.md');
+            }).
             on('dragstart', 'tr', Reorder.dragndrop.handleDragStart).
             on('dragenter', 'tr', Reorder.dragndrop.handleDragEnter).
             on('dragover', 'tr', Reorder.dragndrop.handleDragOver).
@@ -371,14 +401,8 @@ define(function (require, exports, module, showdown) {
                     var row = $(this),
                         id = row.find('td.id').html(),
                         date = row.find('td.date .labelIcon').html(),
-                        note = row.find('td.note textarea').html(),
+                        note = row.find('td.note textarea').val(),
                         noteMarkup = row.find('td.preview article').html();
-                        
-                    console.log(id);
-                    console.log(date);
-                    console.log(note);
-                    console.log(noteMarkup);
-                    console.log('===================================');
                     
                     _notes.push({
                         id: parseInt(id, 10),
@@ -387,8 +411,6 @@ define(function (require, exports, module, showdown) {
                         noteMarkup: noteMarkup
                     });
                 });
-            
-                console.log(_notes);
                 
                 storageSaveObj(localStorage, 'georapbox.notes', _notes);
             });

@@ -2,9 +2,18 @@
     <tr draggable="true">
         <td class="date"><div class="labelIcon">{{date}}</div></td>
         <td class="note"><textarea readonly>{{note}}</textarea></td>
-        <td class="preview"><article contenteditable="true">{{{noteMarkup}}}</article></td>
-        <td class="edit"><a href="#" title="Edit">Edit</a></td>
-        <td class="delete"><a href="#" class="remove" title="Delete">&times;</a></td>
+        <td class="preview">
+            <a href="#" class="georapbox-notes-options-handler"></a>
+            <div class="georapbox-notes-options">
+                <ul>
+                    <li><a class="georapbox-notes-extract" href="#">Extract to file</a></li>
+                    <li><a class="georapbox-notes-edit" href="#">Edit</a></li>
+                    <li><a class="georapbox-notes-delete" href="#">Delete</a></li>
+                </ul>
+            </div>
+            <article contenteditable="true">{{{noteMarkup}}}</article></td>
+        <!--<td class="edit"><a href="#" title="Edit">Edit</a></td>
+        <td class="delete"><a href="#" class="remove" title="Delete">&times;</a></td>-->
         <td class="id">{{id}}</td>
     </tr>
 {{/notes}}

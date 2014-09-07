@@ -21,12 +21,17 @@ Extension for [Brackets](https://github.com/adobe/brackets) that allows the user
 1. Under main menu select **View > Notes** or use the shortcut **"CTRL+ALT+Shift+N"** or click the **"Notes" icon** on the extension toolbar to open the Notes Panel.
 2. Click on the "NEW NOTE" button to open the dialog, type your note and click "Save".
 3. You can edit a note by clicking on the "Edit" icon or delete it by clicking on the "X" icon.
-4. Reorder the notes with drag and drop.
+4. Drag and drop notes to reorder them.
 
 ### Further info
 - At the time being all notes are stored to Web Storage.
 
 ## Changelog
+###1.0.2
+- Extract notes to file.
+- Group each note's options (extract, edit, delete) into a dropdown list.
+- Bug fixing on reordering notes functionality.
+
 ###1.0.1
 - Drag and drop to reorder notes.
 - Remember if notes panel is visible or not.
