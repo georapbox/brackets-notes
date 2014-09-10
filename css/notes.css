@@ -172,7 +172,6 @@ button[data-id="georapbox-notes-new-btn"]:hover {
 
 #georapbox-notes-panel table td.preview article {
     font-size: 14px;
-    overflow: scroll;
     padding: 5px 15px;
     margin: 10px 0;
     color: #121212;
@@ -191,39 +190,6 @@ button[data-id="georapbox-notes-new-btn"]:hover {
 }
 #georapbox-notes-panel table td.id {
     display: none;
-}
-#georapbox-notes-panel table td.edit {
-    width: 7px;
-    padding: 0 10px;
-}
-#georapbox-notes-panel table td.edit a {
-    display: block;
-    width: 20px;
-    height: 20px;
-    background: url(../images/georapbox.edit.icon.svg) no-repeat 0 0;
-    text-indent: -9999px;
-    opacity: 0.8;
-}
-#georapbox-notes-panel table td.edit a:hover {
-    opacity: 1;
-}
-#georapbox-notes-panel table td.delete {
-    width: 7px;
-    padding: 0 10px;
-}
-#georapbox-notes-panel table td.delete a {
-    display: block;
-    font-size: 15px;
-    width: 17px;
-    height: 17px;
-	text-align: center;
-    color: #ffffff;
-    background-color: #c95353;
-    border-radius: 34px;
-}
-#georapbox-notes-panel table td.delete a:hover {
-    text-decoration: none;
-    background-color: #ea2020;
 }
 #georapbox-notes-panel .labelIcon {
     padding: 15px 0 17px 0;
@@ -264,7 +230,7 @@ button[data-id="georapbox-notes-new-btn"]:hover {
     border-radius: 5px;
     padding: 5px 10px;
     box-sizing: border-box;
-    overflow: scroll;
+    overflow: auto;
     resize: vertical;
 }
 .georapbox-notes-new-note-dialog div[data-id="georapbox-new-note-preview"] strong {

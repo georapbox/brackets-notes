@@ -26,7 +26,19 @@ Extension for [Brackets](https://github.com/adobe/brackets) that allows the user
 ### Further info
 - At the time being all notes are stored to Web Storage.
 
+## Localization
+The extension is translated in the following languages:
+
+- English (default)
+- Greek
+- Italian
+- Spanish
+- French
+
 ## Changelog
+###1.0.3
+- Localization support.
+
 ###1.0.2
 - Extract notes to file.
 - Group each note's options (extract, edit, delete) into a dropdown list.

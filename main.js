@@ -49,16 +49,16 @@ define(function (require, exports, module, showdown) {
     
     var CommandManager = brackets.getModule('command/CommandManager'),
         Dialogs = brackets.getModule('widgets/Dialogs'),
-        Strings = brackets.getModule('strings'),
+        Strings = require('strings'),
         Menus = brackets.getModule('command/Menus'),
         KeyBindingManager = brackets.getModule('command/KeyBindingManager'),
         ExtensionUtils = brackets.getModule('utils/ExtensionUtils'),
         PanelManager = brackets.getModule('view/PanelManager'),
         DocumentManager = brackets.getModule('document/DocumentManager'),
         AppInit = brackets.getModule('utils/AppInit'),
-        
-        noteIcon = $('<a title="Notes" id="georapbox-notes-icon"></a>'),
+        noteIcon = $('<a title="' + Strings.EXTENSION_NAME + '" id="georapbox-notes-icon"></a>'),
         notesPanelTemplate = require('text!html/notes-panel.html'),
+        notesPanelHeaderTemplate = require('text!html/notes-panel-header.html'),
         notesRowTemplate = require('text!html/notes-row.html'),
         newNoteTemplate = require('text!html/notes-new.html'),
         deleteNoteTemplate = require('text!html/delete-note.html'),
@@ -185,6 +185,7 @@ define(function (require, exports, module, showdown) {
                 fileColumn,
                 file,
                 resultsHTML = Mustache.render(notesRowTemplate, {
+					strings: Strings,
                     notes: _notes
                 });
 
@@ -265,6 +266,20 @@ define(function (require, exports, module, showdown) {
         dialog.find('.note').html(noteText.substring(0, 200) + '...');
         return promise;
     }
+	
+	/**	
+	 * Creates the "Notes" bottom panel.
+	 */
+	function createBottomPanel() {
+		panel = PanelManager.createBottomPanel('georapbox.notes.panel', $(notesPanelTemplate), 100);
+		
+		var panelHeader = $('#georapbox-notes-panel-header'),
+			resultsHTML = Mustache.render(notesPanelHeaderTemplate, {
+				strings: Strings
+			});
+		
+		panelHeader.empty().append(resultsHTML);
+	}
     
     /**    
      * Toggles notes bottom panel state.
@@ -276,7 +291,7 @@ define(function (require, exports, module, showdown) {
             CommandManager.get('georapbox.notes.viewNotes').setChecked(false);
             localStorage.setItem('georapbox.notes.visible', 'false');
         } else {
-            panel.show();
+			panel.show();
             noteIcon.addClass('active');
             CommandManager.get('georapbox.notes.viewNotes').setChecked(true);
             renderNotes();
@@ -305,7 +320,7 @@ define(function (require, exports, module, showdown) {
         
         navigateMenu.addMenuDivider();
         
-        registerCommandHandler('georapbox.notes.viewNotes', 'Notes', togglePanel, 'Ctrl-Alt-Shift-N', viewMenu);
+        registerCommandHandler('georapbox.notes.viewNotes', Strings.COMMAND_NAME, togglePanel, 'Ctrl-Alt-Shift-N', viewMenu);
     }
     
     /**    
@@ -423,7 +438,7 @@ define(function (require, exports, module, showdown) {
      * Description: Initialize the extension.
      */
     AppInit.appReady(function () {
-        panel = PanelManager.createBottomPanel('georapbox.notes.panel', $(notesPanelTemplate), 100);
+        createBottomPanel();
         addStyles();
         addMenuCommands();
         addHandlers();
