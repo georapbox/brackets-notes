@@ -36,6 +36,10 @@ The extension is translated in the following languages:
 - French
 
 ## Changelog
+###1.0.4
+- Minor bug fix: Remove <code>contentediatable="true"</code> attribute from the bottom panel preview.
+- Add styling for &lt;code&gt;&lt;/code&gt; elements.
+
 ###1.0.3
 - Localization support.
 

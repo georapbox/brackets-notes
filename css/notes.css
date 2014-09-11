@@ -36,6 +36,7 @@ button[data-id="georapbox-notes-new-btn"]:hover {
 #georapbox-notes-panel table tr {
     transition: transform 0.35s ease;   
     -webkit-transition: -webkit-transform 0.35s ease;
+    -webkit-user-select: text;
     cursor: move;
 }
 .dark #georapbox-notes-panel table tr.over {
@@ -199,6 +200,7 @@ button[data-id="georapbox-notes-new-btn"]:hover {
     text-align: center;
     box-sizing: border-box;
     margin-top: 9px;
+    -webkit-user-select: none;
 }
 
 /* New Note Dialog */
@@ -270,3 +272,12 @@ button[data-id="georapbox-notes-new-btn"]:hover {
 .georapbox-notes-new-note-dialog div[data-id="georapbox-new-note-preview"] h4, #georapbox-notes-panel table td.preview article h4 { font-size: 1.20em; }
 .georapbox-notes-new-note-dialog div[data-id="georapbox-new-note-preview"] h5, #georapbox-notes-panel table td.preview article h5 { font-size: 1.00em; }
 .georapbox-notes-new-note-dialog div[data-id="georapbox-new-note-preview"] h6, #georapbox-notes-panel table td.preview article h6 { font-size: 0.90em; }
+
+.georapbox-notes-new-note-dialog div[data-id="georapbox-new-note-preview"] code, #georapbox-notes-panel table td.preview article code {
+    font-size: 12px;
+    padding: 6px;
+    color: #333333;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    background: #f5f5f5;
+}
