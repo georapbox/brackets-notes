@@ -1,4 +1,4 @@
-/*jslint devel: true, nomen: true*/
+/*jshint browser: true, devel: true*/
 /*global define, $, Mustache, brackets */
 
 /*
@@ -48,12 +48,12 @@ define(function (require, exports, module, showdown) {
     }
     
     var CommandManager = brackets.getModule('command/CommandManager'),
-        Dialogs = brackets.getModule('widgets/Dialogs'),
+		Dialogs = brackets.getModule('widgets/Dialogs'),
         Strings = require('strings'),
         Menus = brackets.getModule('command/Menus'),
         KeyBindingManager = brackets.getModule('command/KeyBindingManager'),
         ExtensionUtils = brackets.getModule('utils/ExtensionUtils'),
-        PanelManager = brackets.getModule('view/PanelManager'),
+        WorkspaceManager = brackets.getModule('view/WorkspaceManager'),
         DocumentManager = brackets.getModule('document/DocumentManager'),
         AppInit = brackets.getModule('utils/AppInit'),
         noteIcon = $('<a title="' + Strings.EXTENSION_NAME + '" id="georapbox-notes-icon"></a>'),
@@ -76,8 +76,7 @@ define(function (require, exports, module, showdown) {
     function openFile(content, fileExtension) {
         var counter = 1,
             doc = DocumentManager.createUntitledDocument(counter, fileExtension);
-
-        DocumentManager.setCurrentDocument(doc);
+		
         doc.setText(content);
     }
     
@@ -271,7 +270,7 @@ define(function (require, exports, module, showdown) {
 	 * Creates the "Notes" bottom panel.
 	 */
 	function createBottomPanel() {
-		panel = PanelManager.createBottomPanel('georapbox.notes.panel', $(notesPanelTemplate), 100);
+		panel = WorkspaceManager.createBottomPanel('georapbox.notes.panel', $(notesPanelTemplate), 100);
 		
 		var panelHeader = $('#georapbox-notes-panel-header'),
 			resultsHTML = Mustache.render(notesPanelHeaderTemplate, {

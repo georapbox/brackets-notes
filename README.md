@@ -36,6 +36,10 @@ The extension is translated in the following languages:
 - French
 
 ## Changelog
+###1.0.5
+- Fixed "Extract to file" functionality issues due to deprecated method calls.
+
+
 ###1.0.4
 - Minor bug fix: Remove <code>contentediatable="true"</code> attribute from the bottom panel preview.
 - Add styling for &lt;code&gt;&lt;/code&gt; elements.
