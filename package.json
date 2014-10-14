@@ -17,5 +17,6 @@
     ],
     "engines": {
         "brackets": ">=0.37.0"
-    }
+    },
+    "i18n": ["en", "it", "el", "es", "fr" ]
 }
