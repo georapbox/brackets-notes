@@ -200,6 +200,7 @@ define(function (require, exports, module, showdown) {
     function showNewNoteModal() {
         var dialog,
             noteTextarea,
+            hidePreviewInput,
             noteValue,
             noteHtml,
             preview,
@@ -226,16 +227,47 @@ define(function (require, exports, module, showdown) {
         
         dialog = $('.georapbox-notes-new-note-dialog.instance');
         preview = $('div[data-id="georapbox-new-note-preview"]');
+        noteTextarea = dialog.find('textarea');
+        hidePreviewInput = dialog.find('input[type="checkbox"]');
+        
+        noteTextarea.focus();
+        
         
         function previewMarkDown(noteMarkup) {
             preview.html(marked(noteMarkup.val()));
         }
         
-        noteTextarea = dialog.find('textarea');
-        noteTextarea.focus();
+        function togglePreview(isVisible) {
+            if (isVisible === true) {
+                preview.show();
+                noteTextarea.css({ width: '49%' });
+                localStorage.setItem('georapbox.notes.preview.visible', 'true');
+            } else {
+                preview.hide();
+                noteTextarea.css({ width: '99%' });
+                localStorage.setItem('georapbox.notes.preview.visible', 'false');
+            }
+        }
         
         dialog.on('keyup', 'textarea', function () {
             previewMarkDown($(this));
+        });
+        
+        
+        // Determine if Preview is visible or not.
+        if (localStorage.getItem('georapbox.notes.preview.visible') === 'false') {
+            hidePreviewInput.attr('checked', 'checked');
+            togglePreview(false);
+        }
+        
+        dialog.on('change', 'input[type="checkbox"]', function () {
+            var checkbox = $(this);
+            
+            if (checkbox.is(':checked')) {
+                togglePreview(false);
+            } else {
+                togglePreview(true);
+            }
         });
         
         return promise;

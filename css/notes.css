@@ -207,6 +207,11 @@ button[data-id="georapbox-notes-new-btn"]:hover {
 .georapbox-notes-new-note-dialog {
     width: 70%;
 }
+.georapbox-notes-new-note-dialog div[data-id="georapbox-hide-preview"] {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
 .georapbox-notes-new-note-dialog textarea {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 13px;
