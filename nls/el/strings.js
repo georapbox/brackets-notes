@@ -12,6 +12,7 @@ define({
 	'MARKDOWN_SYNTAX_REFERENCE': 'Παραπομπή Σύνταξης Markdown',
 	'CANCEL': 'Ακύρωση',
 	'SAVE': 'Αποθήκευση',
+    'HIDE_PREVIEW': 'Απόκρυψη προεπισκόπησης',
 	
 	// Note row
 	'EXTRACT_TO_FILE': 'Εξαγωγή σε αρχείο',

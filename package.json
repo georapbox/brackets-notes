@@ -3,7 +3,7 @@
     "title": "Notes",
     "description": "Easily add and manage notes.",
     "homepage": "https://github.com/georapbox/brackets-notes",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "author": "George Raptis <georapbox@gmail.com> (http://georap.gr)",
     "license": "MIT",
     "repository": {
@@ -18,5 +18,5 @@
     "engines": {
         "brackets": ">=0.37.0"
     },
-    "i18n": ["en", "it", "el", "es", "fr" ]
+    "i18n": ["en", "it", "el", "es", "fr", "cs"]
 }

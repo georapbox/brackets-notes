@@ -12,6 +12,7 @@ define({
 	'MARKDOWN_SYNTAX_REFERENCE': 'Markdown Sintaxis Referencia',
 	'CANCEL': 'Cancelar',
 	'SAVE': 'Guarde',
+    'HIDE_PREVIEW': 'Esconder la vista previa',
 	
 	// Note row
 	'EXTRACT_TO_FILE': 'Exportar a archivo',

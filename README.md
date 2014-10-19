@@ -34,8 +34,13 @@ The extension is translated in the following languages:
 - Italian
 - Spanish
 - French
+- Czech
 
 ## Changelog
+
+###1.0.7
+- Hide Markdown Preview option.
+- Czech translation (thanks to Vojtěch Pavlovský)
 
 ###1.0.6
 - Update package.json with available localization options.
