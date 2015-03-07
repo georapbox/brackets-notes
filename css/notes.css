@@ -34,7 +34,7 @@ button[data-id="georapbox-notes-new-btn"]:hover {
     width: 99.5%;
 }
 #georapbox-notes-panel table tr {
-    transition: transform 0.35s ease;   
+    transition: transform 0.35s ease;
     -webkit-transition: -webkit-transform 0.35s ease;
     -webkit-user-select: text;
     cursor: move;
@@ -205,7 +205,11 @@ button[data-id="georapbox-notes-new-btn"]:hover {
 
 /* New Note Dialog */
 .georapbox-notes-new-note-dialog {
-    width: 70%;
+    width: 768px;
+}
+.georapbox-notes-new-note-dialog .modal-header h1 {
+    padding-bottom: 0;
+    line-height: 28px;
 }
 .georapbox-notes-new-note-dialog div[data-id="georapbox-hide-preview"] {
     position: absolute;
@@ -249,6 +253,11 @@ button[data-id="georapbox-notes-new-btn"]:hover {
 .georapbox-notes-new-note-dialog div[data-id="georapbox-new-note-preview"]:empty:not(:focus):before {
     content: attr(data-ph);
     color: #808080;
+}
+
+/* Delete note dialog */
+.georapbox-notes-delete-note-dialog {
+    width: 640px;
 }
 
 /* Markdown theme */
