@@ -1,5 +1,8 @@
 ## Changelog
 
+###1.0.8
+- Update modals' styles to conform with Brackets v1.2.
+
 ###1.0.7
 - Hide Markdown Preview option.
 - Czech translation (thanks to Vojtěch Pavlovský)
