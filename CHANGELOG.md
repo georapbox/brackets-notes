@@ -1,5 +1,8 @@
 # Changelog
 
+###1.0.9
+- BUGFIX: Fix "New Note" and "Delete Note" dialogs position.
+
 ###1.0.8
 - Update modals' styles to conform with Brackets v1.2.
 

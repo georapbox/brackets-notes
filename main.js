@@ -232,11 +232,6 @@ define(function (require, exports, module, showdown) {
 
         noteTextarea.focus();
 
-        // Tweak ".modal-wrapper" to center the modal instance.
-        dialog.parent().parent().css({
-            width: 768
-        });
-
         function previewMarkDown(noteMarkup) {
             preview.html(marked(noteMarkup.val()));
         }
@@ -299,11 +294,6 @@ define(function (require, exports, module, showdown) {
         dialog = $('.georapbox-notes-delete-note-dialog.instance');
         dialog.find('.date').html(noteDate);
         dialog.find('.note').html(noteText.substring(0, 200) + '...');
-
-        // Tweak ".modal-wrapper" to center the modal instance.
-        dialog.parent().parent().css({
-            width: 768
-        });
 
         return promise;
     }
