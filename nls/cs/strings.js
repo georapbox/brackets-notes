@@ -5,6 +5,7 @@ define({
   // New note
   'NEW_NOTE': 'Nová poznámka',
   'EXPORT_NOTES': 'Exportní poznámky',
+  'IMORT_NOTES': 'Poznámky k importu',
   'TYPE_YOUR_NOTE': 'Napište svoji poznámku.',
   'MARKDOWN_PREVIEW': 'Markdown náhled.',
   'MARKDOWN_SYNTAX_REFERENCE': 'Pravidla pro Markdown syntaxi',

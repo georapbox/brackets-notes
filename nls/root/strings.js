@@ -5,6 +5,7 @@ define({
   // New note
   'NEW_NOTE': 'New Note',
   'EXPORT_NOTES': 'Export Notes',
+  'IMPORT_NOTES': 'Import Notes',
   'TYPE_YOUR_NOTE': 'Type your note.',
   'MARKDOWN_PREVIEW': 'Markdown preview.',
   'MARKDOWN_SYNTAX_REFERENCE': 'Markdown Syntax Reference',

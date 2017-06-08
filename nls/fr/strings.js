@@ -5,6 +5,7 @@ define({
   // New note
   'NEW_NOTE': 'Nouvelle Note',
   'EXPORT_NOTES': 'Notes d\'exportation',
+  'IMORT_NOTES': 'Notes d\'importation',
   'TYPE_YOUR_NOTE': 'Entrer la note.',
   'MARKDOWN_PREVIEW': 'Markdown prévisualisation.',
   'MARKDOWN_SYNTAX_REFERENCE': 'Markdown Référence de la Syntaxe',

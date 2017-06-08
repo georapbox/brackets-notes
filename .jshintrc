@@ -47,7 +47,7 @@
   "loopfunc": false,
   "moz": false,
   "noyield": false,
-  "plusplus": true,
+  "plusplus": false,
   "proto": false,
   "scripturl": false,
   "supernew": false,

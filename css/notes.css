@@ -210,7 +210,8 @@
 }
 
 /* New Note Dialog */
-.georapbox-notes-new-note-dialog {
+.georapbox-notes-new-note-dialog,
+.georapbox-notes-import-notes-dialog {
   width: 768px;
 }
 .georapbox-notes-new-note-dialog .modal-header h1 {
@@ -222,7 +223,8 @@
   top: 15px;
   right: 15px;
 }
-.georapbox-notes-new-note-dialog textarea {
+.georapbox-notes-new-note-dialog textarea,
+.georapbox-notes-import-notes-dialog textarea {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 13px;
   float: left;
@@ -233,6 +235,9 @@
   margin-right: 1%;
   box-sizing: border-box;
   resize: vertical;
+}
+.georapbox-notes-import-notes-dialog textarea {
+  width: 100%;
 }
 .georapbox-notes-new-note-dialog div[data-id="georapbox-new-note-preview"] {
   font-size: 14px;

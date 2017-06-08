@@ -40,8 +40,11 @@ define(function (require, exports, module) {
   var notesPanelHeaderTemplate = require('text!html/notes-panel-header.html');
   var notesRowTemplate = require('text!html/notes-row.html');
   var newNoteTemplate = require('text!html/notes-new.html');
+  var importNotesTemplate = require('text!html/notes-import.html');
   var deleteNoteTemplate = require('text!html/delete-note.html');
-  var Reorder = require('services/reorder');
+  var reorder = require('services/reorder');
+  var validateNotes = require('services/validate-notes');
+  var uniqBy = require('utils/uniq-by');
   var marked = require('lib/marked');
   var STORAGE_KEY = 'georapbox.notes';
   var _notes = storageGetObj(localStorage, STORAGE_KEY) || [];
@@ -253,6 +256,43 @@ define(function (require, exports, module) {
   }
 
   /**
+   * Shows Import Notes dialog.
+   * @return {Object} A Promise that resolves to user's actions on dialog.
+   */
+  function showImportNotesDialog() {
+    var dialog, notesTextarea, notesValue;
+    var promise = Dialogs.showModalDialogUsingTemplate(Mustache.render(importNotesTemplate, Strings))
+      .done(function (id) {
+        var savedNotes = storageGetObj(localStorage, STORAGE_KEY) || [];
+        var parsedNotes = [];
+
+        // if button OK clicked
+        if (id === Dialogs.DIALOG_BTN_OK) {
+          notesTextarea = dialog.find('textarea');
+          notesValue = notesTextarea.val();
+
+          try {
+            parsedNotes = JSON.parse(notesValue);
+          } catch (err) {
+            console.error(err);
+          }
+
+          if (validateNotes(parsedNotes)) {
+            _notes = uniqBy(savedNotes.concat(parsedNotes), 'id');
+            storageSaveObj(localStorage, STORAGE_KEY, _notes);
+            renderNotes();
+          } else {
+            console.log('NOT VALID NOTE');
+          }
+        }
+      });
+
+    dialog = $('.georapbox-notes-import-notes-dialog.instance');
+
+    return promise;
+  }
+
+  /**
    * Shows dialog for removing note.
    * @param noteId {Number}
    * @param noteDate {String}
@@ -391,6 +431,7 @@ function createBottomPanel() {
         }
       })
       .on('click', '[data-id="georapbox-notes-new-btn"]', showNewNoteModal)
+      .on('click', '[data-id="georapbox-notes-import-btn"]', showImportNotesDialog)
       .on('click', '.georapbox-notes-options-handler', function (e) {
         var options = $(this).next();
 
@@ -420,15 +461,15 @@ function createBottomPanel() {
           console.error(err);
         }
       })
-      .on('dragstart', 'tr', Reorder.dragndrop.handleDragStart)
-      .on('dragenter', 'tr', Reorder.dragndrop.handleDragEnter)
-      .on('dragover', 'tr', Reorder.dragndrop.handleDragOver)
-      .on('dragleave', 'tr', Reorder.dragndrop.handleDragLeave)
-      .on('drop', 'tr', Reorder.dragndrop.handleDrop)
+      .on('dragstart', 'tr', reorder.dragndrop.handleDragStart)
+      .on('dragenter', 'tr', reorder.dragndrop.handleDragEnter)
+      .on('dragover', 'tr', reorder.dragndrop.handleDragOver)
+      .on('dragleave', 'tr', reorder.dragndrop.handleDragLeave)
+      .on('drop', 'tr', reorder.dragndrop.handleDrop)
       .on('dragend', 'tr', function () {
         var rows = notesPanel.find('tr');
 
-        Reorder.dragndrop.handleDragEnd(rows);
+        reorder.dragndrop.handleDragEnd(rows);
 
         _notes = [];
 

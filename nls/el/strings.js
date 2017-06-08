@@ -5,6 +5,7 @@ define({
   // New note
   'NEW_NOTE': 'Νεο Σημειωμα',
   'EXPORT_NOTES': 'Εξαγωγη σημειωματων',
+  'IMPORT_NOTES': 'Εισαγωγη σημειωματων',
   'TYPE_YOUR_NOTE': 'Πληκτρολογείστε το σημείωμά σας.',
   'MARKDOWN_PREVIEW': 'Προεπισκόπηση Markdown.',
   'MARKDOWN_SYNTAX_REFERENCE': 'Παραπομπή Σύνταξης Markdown',
