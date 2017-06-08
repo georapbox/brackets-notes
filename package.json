@@ -1,22 +1,22 @@
 {
-    "name": "georapbox.brackets-notes",
-    "title": "Notes",
-    "description": "Easily add and manage notes.",
-    "homepage": "https://github.com/georapbox/brackets-notes",
-    "version": "1.0.9",
-    "author": "George Raptis <georapbox@gmail.com> (http://georap.gr)",
-    "license": "MIT",
-    "repository": {
-		"type": "git",
-		"url": "https://github.com/georapbox/brackets-notes"
-	},
-    "keywords": [
-        "brackets",
-        "markdown",
-        "notes"
-    ],
-    "engines": {
-        "brackets": ">=0.37.0"
-    },
-    "i18n": ["en", "it", "el", "es", "fr", "cs"]
+  "name": "georapbox.brackets-notes",
+  "title": "Notes",
+  "description": "Easily add and manage notes.",
+  "homepage": "https://github.com/georapbox/brackets-notes",
+  "version": "1.0.9",
+  "author": "George Raptis <georapbox@gmail.com> (http://georap.gr)",
+  "license": "MIT",
+  "repository": {
+	"type": "git",
+	"url": "https://github.com/georapbox/brackets-notes"
+},
+  "keywords": [
+    "brackets",
+    "markdown",
+    "notes"
+  ],
+  "engines": {
+    "brackets": ">=0.37.0"
+  },
+  "i18n": ["en", "it", "el", "es", "fr", "cs"]
 }

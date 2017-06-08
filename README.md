@@ -1,4 +1,4 @@
-## Brackets Notes Extension
+# Brackets Notes Extension
 
 Extension for [Brackets](https://github.com/adobe/brackets) that allows the user to easily add and manage notes, with [Markdown](http://daringfireball.net/projects/markdown/) support.\*
 
@@ -35,3 +35,7 @@ The extension is translated in the following languages:
 - Spanish
 - French
 - Czech
+
+## License
+
+[The MIT License (MIT)](https://georapbox.mit-license.org/@2014)
