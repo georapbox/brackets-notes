@@ -14,18 +14,33 @@
 .georapbox-notes-panel__header-button {
   float: right;
   margin: 0 3px 0 0;
-  padding: 0px 7px;
+  padding: 0 7px;
   text-transform: uppercase;
-  color: #959595;
   cursor: pointer;
   border-radius: 2px;
   font-size: 11px;
 }
 .georapbox-notes-panel__header-button:hover {
-  background: #ffffff;
+  background-color: #ffffff;
 }
 .georapbox-notes-panel__header-button:nth-child(2) {
   margin-right: 23px;
+}
+.georapbox-notes-panel__header-button .icn {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  vertical-align: bottom;
+}
+.georapbox-notes-panel__header-button .icn-import,
+.georapbox-notes-panel__header-button .icn-export {
+  background-image: url(../images/export-import.svg);
+}
+.georapbox-notes-panel__header-button .icn-import {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 #georapbox-notes-panel header h1 {
   float: left;
