@@ -11,7 +11,7 @@ define({
   'MARKDOWN_SYNTAX_REFERENCE': 'Pravidla pro Markdown syntaxi',
   'CANCEL': 'Zrušit',
   'SAVE': 'Uložit',
-    'HIDE_PREVIEW': 'Skrýt náhled',
+  'HIDE_PREVIEW': 'Skrýt náhled',
 
   // Note row
   'EXTRACT_TO_FILE': 'Uložit do souboru',
@@ -23,6 +23,7 @@ define({
 
   // Import notes
   'IMPORT_NOTES_DESC': 'Zde vložte obsah exportovaného souboru s poznámkami',
+  'IMPORT_NOTES_NOTE': 'POZNÁMKA: Pokud již máte nějaké poznámky uložené, doporučujeme před importem uchovat zálohu.',
   'INVALID_IMPORT_TITLE': 'Neplatný formát poznámek',
   'INVALID_IMPORT_MESSAGE': '<p>Příklad platného formátu:</p>'
 });

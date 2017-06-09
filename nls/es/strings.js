@@ -11,7 +11,7 @@ define({
   'MARKDOWN_SYNTAX_REFERENCE': 'Markdown Sintaxis Referencia',
   'CANCEL': 'Cancelar',
   'SAVE': 'Guarde',
-    'HIDE_PREVIEW': 'Esconder la vista previa',
+  'HIDE_PREVIEW': 'Esconder la vista previa',
 
   // Note row
   'EXTRACT_TO_FILE': 'Exportar a archivo',
@@ -23,6 +23,7 @@ define({
 
   // Import notes
   'IMPORT_NOTES_DESC': 'Pegue el contenido del archivo de nota exportado aquí',
+  'IMPORT_NOTES_NOTE': 'NOTA: Si ya tiene alguna nota guardada, se recomienda guardar una copia de seguridad antes de importarla.',
   'INVALID_IMPORT_TITLE': 'Formato de notas no válido',
   'INVALID_IMPORT_MESSAGE': '<p>Ejemplo de formato válido:</p>'
 });

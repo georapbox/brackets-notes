@@ -23,6 +23,7 @@ define({
 
   // Import notes
   'IMPORT_NOTES_DESC': 'Incollare qui il contenuto del file di nota esportato',
+  'IMPORT_NOTES_NOTE': 'NOTA: Se hai già salvato le note, è consigliabile mantenere un backup prima dell\'importazione.',
   'INVALID_IMPORT_TITLE': 'Note non valide fromat',
   'INVALID_IMPORT_MESSAGE': '<p>Esempio di formato valido:</p>'
 });
