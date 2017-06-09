@@ -19,5 +19,10 @@ define({
   'DELETE': 'Smazat',
 
   // Delete modal
-  'DELETE_PROMPT': 'Opravdu chcete tuto poznámku smazat?'
+  'DELETE_PROMPT': 'Opravdu chcete tuto poznámku smazat?',
+
+  // Import notes
+  'IMPORT_NOTES_DESC': 'Zde vložte obsah exportovaného souboru s poznámkami',
+  'INVALID_IMPORT_TITLE': 'Neplatný formát poznámek',
+  'INVALID_IMPORT_MESSAGE': '<p>Příklad platného formátu:</p>'
 });

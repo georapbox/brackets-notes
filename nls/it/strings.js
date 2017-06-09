@@ -19,5 +19,10 @@ define({
   'DELETE': 'Annullare',
 
   // Delete modal
-  'DELETE_PROMPT': 'Sei sicuro di voler eliminare questo appunto?'
+  'DELETE_PROMPT': 'Sei sicuro di voler eliminare questo appunto?',
+
+  // Import notes
+  'IMPORT_NOTES_DESC': 'Incollare qui il contenuto del file di nota esportato',
+  'INVALID_IMPORT_TITLE': 'Note non valide fromat',
+  'INVALID_IMPORT_MESSAGE': '<p>Esempio di formato valido:</p>'
 });

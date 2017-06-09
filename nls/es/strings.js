@@ -19,5 +19,10 @@ define({
   'DELETE': 'Eliminar',
 
   // Delete modal
-  'DELETE_PROMPT': 'Está seguro de que desea eliminar esta nota?'
+  'DELETE_PROMPT': 'Está seguro de que desea eliminar esta nota?',
+
+  // Import notes
+  'IMPORT_NOTES_DESC': 'Pegue el contenido del archivo de nota exportado aquí',
+  'INVALID_IMPORT_TITLE': 'Formato de notas no válido',
+  'INVALID_IMPORT_MESSAGE': '<p>Ejemplo de formato válido:</p>'
 });

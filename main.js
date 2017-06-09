@@ -42,12 +42,13 @@ define(function (require, exports, module) {
   var newNoteTemplate = require('text!html/notes-new.html');
   var importNotesTemplate = require('text!html/notes-import.html');
   var deleteNoteTemplate = require('text!html/delete-note.html');
-  var infoTemplate = require('text!html/info-dialog.html');
   var reorder = require('services/reorder');
   var validateNotes = require('services/validate-notes');
   var uniqBy = require('utils/uniq-by');
   var marked = require('lib/marked');
   var STORAGE_KEY = 'georapbox.notes';
+  var STORAGE_KEY_VISIBLE = STORAGE_KEY + '.visible';
+  var STORAGE_KEY_PREVIEW_VISIBLE = STORAGE_KEY + '.preview.visible';
   var _notes = storageGetObj(localStorage, STORAGE_KEY) || [];
   var panel, notesPanel;
 
@@ -231,11 +232,11 @@ define(function (require, exports, module) {
       if (isVisible === true) {
         preview.show();
         noteTextarea.css({ width: '49%' });
-        localStorage.setItem('georapbox.notes.preview.visible', 'true');
+        localStorage.setItem(STORAGE_KEY_PREVIEW_VISIBLE, 'true');
       } else {
         preview.hide();
         noteTextarea.css({ width: '99%' });
-        localStorage.setItem('georapbox.notes.preview.visible', 'false');
+        localStorage.setItem(STORAGE_KEY_PREVIEW_VISIBLE, 'false');
       }
     }
 
@@ -244,7 +245,7 @@ define(function (require, exports, module) {
     });
 
     // Determine if Preview is visible or not.
-    if (localStorage.getItem('georapbox.notes.preview.visible') === 'false') {
+    if (localStorage.getItem(STORAGE_KEY_PREVIEW_VISIBLE) === 'false') {
       hidePreviewInput.attr('checked', 'checked');
       togglePreview(false);
     }
@@ -351,13 +352,13 @@ function createBottomPanel() {
       panel.hide();
       noteIcon.removeClass('active');
       CommandManager.get('georapbox.notes.viewNotes').setChecked(false);
-      localStorage.setItem('georapbox.notes.visible', 'false');
+      localStorage.setItem(STORAGE_KEY_VISIBLE, 'false');
     } else {
       panel.show();
       noteIcon.addClass('active');
       CommandManager.get('georapbox.notes.viewNotes').setChecked(true);
       renderNotes();
-      localStorage.setItem('georapbox.notes.visible', 'true');
+      localStorage.setItem(STORAGE_KEY_VISIBLE, 'true');
     }
   }
 
@@ -513,7 +514,7 @@ function createBottomPanel() {
     addStyles();
     addMenuCommands();
     addHandlers();
-    if (localStorage.getItem('georapbox.notes.visible') === 'true') {
+    if (localStorage.getItem(STORAGE_KEY_VISIBLE) === 'true') {
       togglePanel();
     }
   });

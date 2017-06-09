@@ -21,6 +21,8 @@ define({
   // Delete modal
   'DELETE_PROMPT': 'Are you sure you want to delete this note?',
 
+  // Import notes
+  'IMPORT_NOTES_DESC': 'Paste the contents of the exported notes file here',
   'INVALID_IMPORT_TITLE': 'Invalid notes format',
   'INVALID_IMPORT_MESSAGE': '<p>Example of valid format:</p>'
 });
