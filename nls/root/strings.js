@@ -11,7 +11,7 @@ define({
   'MARKDOWN_SYNTAX_REFERENCE': 'Markdown Syntax Reference',
   'CANCEL': 'Cancel',
   'SAVE': 'Save',
-    'HIDE_PREVIEW': 'Hide preview',
+  'HIDE_PREVIEW': 'Hide preview',
 
   // Note row
   'EXTRACT_TO_FILE': 'Extract to file',
@@ -19,5 +19,8 @@ define({
   'DELETE': 'Delete',
 
   // Delete modal
-  'DELETE_PROMPT': 'Are you sure you want to delete this note?'
+  'DELETE_PROMPT': 'Are you sure you want to delete this note?',
+
+  'INVALID_IMPORT_TITLE': 'Invalid notes format',
+  'INVALID_IMPORT_MESSAGE': '<p>Example of valid format:</p>'
 });

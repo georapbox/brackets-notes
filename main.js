@@ -42,6 +42,7 @@ define(function (require, exports, module) {
   var newNoteTemplate = require('text!html/notes-new.html');
   var importNotesTemplate = require('text!html/notes-import.html');
   var deleteNoteTemplate = require('text!html/delete-note.html');
+  var infoTemplate = require('text!html/info-dialog.html');
   var reorder = require('services/reorder');
   var validateNotes = require('services/validate-notes');
   var uniqBy = require('utils/uniq-by');
@@ -255,6 +256,10 @@ define(function (require, exports, module) {
     return promise;
   }
 
+  function showInfoDialog(message, title) {
+    return Dialogs.showModalDialog('', title, message);
+  }
+
   /**
    * Shows Import Notes dialog.
    * @return {Object} A Promise that resolves to user's actions on dialog.
@@ -265,6 +270,11 @@ define(function (require, exports, module) {
       .done(function (id) {
         var savedNotes = storageGetObj(localStorage, STORAGE_KEY) || [];
         var parsedNotes = [];
+        var exampleNoteFormat = [
+          {id: 1417862479217, date: '12/6/2014 12:41:19 PM', note: 'My first ever note', noteMarkup: 'My first ever note'},
+          {id: 1496988859284, date: '6/9/2017, 9:14:19 AM', note: 'This is another note', noteMarkup: 'This is another note'}
+        ];
+        var exampleNoteFormatTemplate = '<pre>' + JSON.stringify(exampleNoteFormat, null, 2) + '</pre>';
 
         // if button OK clicked
         if (id === Dialogs.DIALOG_BTN_OK) {
@@ -274,7 +284,8 @@ define(function (require, exports, module) {
           try {
             parsedNotes = JSON.parse(notesValue);
           } catch (err) {
-            console.error(err);
+            showInfoDialog(Strings.INVALID_IMPORT_MESSAGE + exampleNoteFormatTemplate, Strings.INVALID_IMPORT_TITLE);
+            return;
           }
 
           if (validateNotes(parsedNotes)) {
@@ -282,7 +293,7 @@ define(function (require, exports, module) {
             storageSaveObj(localStorage, STORAGE_KEY, _notes);
             renderNotes();
           } else {
-            console.log('NOT VALID NOTE');
+            showInfoDialog(Strings.INVALID_IMPORT_MESSAGE + exampleNoteFormatTemplate, Strings.INVALID_IMPORT_TITLE);
           }
         }
       });
