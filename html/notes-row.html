@@ -1,19 +1,19 @@
 {{#notes}}
 {{#strings}}
-    <tr draggable="true">
-        <td class="date"><div class="labelIcon">{{date}}</div></td>
-        <td class="note"><textarea readonly>{{note}}</textarea></td>
-        <td class="preview">
-            <a href="#" class="georapbox-notes-options-handler"></a>
-            <div class="georapbox-notes-options">
-                <ul>
-                    <li><a class="georapbox-notes-extract" href="#">{{EXTRACT_TO_FILE}}</a></li>
-                    <li><a class="georapbox-notes-edit" href="#">{{EDIT}}</a></li>
-                    <li><a class="georapbox-notes-delete" href="#">{{DELETE}}</a></li>
-                </ul>
-            </div>
-            <article>{{{noteMarkup}}}</article></td>
-        <td class="id">{{id}}</td>
-    </tr>
+  <tr draggable="true">
+    <td class="date"><div class="labelIcon">{{date}}</div></td>
+    <td class="note"><textarea readonly>{{note}}</textarea></td>
+    <td class="preview">
+      <a href="#" class="georapbox-notes-options-handler"></a>
+      <div class="georapbox-notes-options">
+        <ul>
+          <li><a class="georapbox-notes-extract" href="#">{{EXTRACT_TO_FILE}}</a></li>
+          <li><a class="georapbox-notes-edit" href="#">{{EDIT}}</a></li>
+          <li><a class="georapbox-notes-delete" href="#">{{DELETE}}</a></li>
+        </ul>
+      </div>
+      <article>{{{noteMarkup}}}</article></td>
+    <td class="id">{{id}}</td>
+  </tr>
 {{/strings}}
 {{/notes}}

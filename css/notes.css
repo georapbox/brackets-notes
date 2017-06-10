@@ -1,49 +1,77 @@
 /* Toolbar Icon */
 #georapbox-notes-icon {
-    background: url(../images/georapbox.notes-icon.svg) no-repeat 0 0;
+  background: url(../images/georapbox.notes-icon.svg) no-repeat 0 0;
 }
 #georapbox-notes-icon.active {
-    background: url(../images/georapbox.notes-icon-active.svg) no-repeat 0 0;
+  background: url(../images/georapbox.notes-icon-active.svg) no-repeat 0 0;
+}
+#georapbox-notes-panel-header {
+  width: 100%;
 }
 
 /* Panel */
 /* Panel header */
-button[data-id="georapbox-notes-new-btn"] {
-    font-size: 11px;
-    position: absolute;
-	top: 2px;
-	right: 30px;
-    padding: 0px 7px;
-    text-transform: uppercase;
-    color: #959595;
-    cursor: pointer;
-    border-radius: 2px;
+.georapbox-notes-panel__header-button {
+  float: right;
+  margin: 0 3px 0 0;
+  padding: 0 7px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  font-size: 11px;
 }
-button[data-id="georapbox-notes-new-btn"]:hover {
-    background: #ffffff;
+.georapbox-notes-panel__header-button:hover,
+.dark .georapbox-notes-panel__header-button:hover {
+  background-color: #ffffff;
+}
+.georapbox-notes-panel__header-button:nth-child(2) {
+  margin-right: 23px;
+}
+.georapbox-notes-panel__header-button .icn {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  vertical-align: bottom;
+}
+.georapbox-notes-panel__header-button .icn-import,
+.georapbox-notes-panel__header-button .icn-export {
+  background-image: url(../images/export-import.svg);
+}
+.georapbox-notes-panel__header-button .icn-import {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.dark .georapbox-notes-panel__header-button,
+.dark .georapbox-notes-panel__header-button:focus,
+.dark .georapbox-notes-panel__header-button:active,
+.dark .georapbox-notes-panel__header-button:active:not([disabled]) {
+  background-color: #e5e9e9;
 }
 #georapbox-notes-panel header h1 {
-    font-size: 14px;
-    padding: 0;
-    margin: 0;
-    line-height: 1;
+  float: left;
+  font-size: 14px;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
 }
 
 /* Panel table */
 #georapbox-notes-panel table {
-    width: 99.5%;
+  width: 99.5%;
 }
 #georapbox-notes-panel table tr {
-    transition: transform 0.35s ease;
-    -webkit-transition: -webkit-transform 0.35s ease;
-    -webkit-user-select: text;
-    cursor: move;
+  transition: transform 0.35s ease;
+  -webkit-transition: -webkit-transform 0.35s ease;
+  -webkit-user-select: text;
+  cursor: move;
 }
 .dark #georapbox-notes-panel table tr.over {
-    border: 2px dashed #a8a8a8;
+  border: 2px dashed #a8a8a8;
 }
 #georapbox-notes-panel table tr.over {
-    border: 2px dashed #000000;
+  border: 2px dashed #000000;
 }
 #georapbox-notes-panel table tr.moving {
   opacity: 0.5;
@@ -51,213 +79,218 @@ button[data-id="georapbox-notes-new-btn"]:hover {
   transform: scale(0.95);
 }
 #georapbox-notes-panel table td {
-    position: relative;
-    padding: 0;
-    vertical-align: top;
+  position: relative;
+  padding: 0;
+  vertical-align: top;
 }
 #georapbox-notes-panel table td.date {
-    width: 150px;
-    padding: 0 10px;
+  width: 150px;
+  padding: 0 10px;
 }
 #georapbox-notes-panel table td.note {
-    display: none;
+  display: none;
 }
 #georapbox-notes-panel table td.note textarea {
-    width: 100%;
-    border-radius: 3px;
-    padding-right: 1%;
-    border: 1px solid #a8a8a8;
-    margin-top: 8px;
-    color: #333;
-    background: #f2f2f2;
-    box-sizing: border-box;
-    cursor: default;
-    resize: vertical;
+  width: 100%;
+  border-radius: 3px;
+  padding-right: 1%;
+  border: 1px solid #a8a8a8;
+  margin-top: 8px;
+  color: #333;
+  background: #f2f2f2;
+  box-sizing: border-box;
+  cursor: default;
+  resize: vertical;
 }
 #georapbox-notes-panel table td.note textarea:focus {
-    outline: 2px auto rgba(90,90,90, 0.5);
+  outline: 2px auto rgba(90,90,90, 0.5);
 }
 #georapbox-notes-panel table td.note textarea.editable {
-    color: #000;
-    background: #ffffff;
-    cursor: text;
+  color: #000;
+  background: #ffffff;
+  cursor: text;
 }
 #georapbox-notes-panel table td.note textarea.editable:focus {
-    outline: 2px auto rgba(66,139,202, 0.7);
+  outline: 2px auto rgba(66,139,202, 0.7);
 }
 #georapbox-notes-panel a.georapbox-notes-options-handler {
-    position: absolute;
-    top: 18px;
-    right: 25px;
-    width: 20px;
-    height: 20px;
-    background: url(../images/gear.svg) no-repeat 0 0;
-    opacity: 0;
-    -webkit-transition: opacity 0.35s ease;
-    transition: opacity 0.35s ease;
+  position: absolute;
+  top: 18px;
+  right: 25px;
+  width: 20px;
+  height: 20px;
+  background: url(../images/gear.svg) no-repeat 0 0;
+  opacity: 0;
+  -webkit-transition: opacity 0.35s ease;
+  transition: opacity 0.35s ease;
 }
 #georapbox-notes-panel table td.preview:hover a.georapbox-notes-options-handler,
 #georapbox-notes-panel table td.preview a.georapbox-notes-options-handler.active {
-    opacity: 1 !important;
+  opacity: 1 !important;
 }
 #georapbox-notes-panel table td.preview .georapbox-notes-options {
-    position: absolute;
-    top: 55px;
-    right: 10px;
-    width: 200px;
-    padding: 10px 5px;
-    background: #ffffff;
-    border: 1px solid #dedede;
-    border-radius: 2px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-    z-index: 2;
-    display: none;
+  position: absolute;
+  top: 55px;
+  right: 10px;
+  width: 200px;
+  padding: 10px 5px;
+  background: #ffffff;
+  border: 1px solid #dedede;
+  border-radius: 2px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  display: none;
 }
 #georapbox-notes-panel table td.preview .georapbox-notes-options:before {
-    content: "";
-    position: absolute;
-    top: -13px;
-    right: 11px;
-    border-bottom: 13px solid black;
-    border-bottom-color: #ffffff;
-    border-left: 13px solid transparent;
-    border-right: 13px solid transparent;
-    z-index: 2;
+  content: "";
+  position: absolute;
+  top: -13px;
+  right: 11px;
+  border-bottom: 13px solid black;
+  border-bottom-color: #ffffff;
+  border-left: 13px solid transparent;
+  border-right: 13px solid transparent;
+  z-index: 2;
 }
 #georapbox-notes-panel table td.preview .georapbox-notes-options:after {
-    content: "";
-    display: block;
-    position: absolute;
-    top: -14px;
-    right: 11px;
-    border-bottom: 13px solid black;
-    border-bottom-color: #d0d0d0;
-    border-left: 13px solid transparent;
-    border-right: 13px solid transparent;
-    z-index: 1;
+  content: "";
+  display: block;
+  position: absolute;
+  top: -14px;
+  right: 11px;
+  border-bottom: 13px solid black;
+  border-bottom-color: #d0d0d0;
+  border-left: 13px solid transparent;
+  border-right: 13px solid transparent;
+  z-index: 1;
 }
 #georapbox-notes-panel table td.preview .georapbox-notes-options ul {
-    list-style: none;
-    margin: 0;
+  list-style: none;
+  margin: 0;
 }
 #georapbox-notes-panel table td.preview .georapbox-notes-options ul li a {
-    display: block;
-    padding: 5px 5px 5px 10px;
-    color: #207cad;
+  display: block;
+  padding: 5px 5px 5px 10px;
+  color: #207cad;
 }
 #georapbox-notes-panel table td.preview .georapbox-notes-options ul li a:hover {
-    color: #ffffff;
-    background-color: #207cad;
-    text-decoration: none;
-    border-radius: 2px;
+  color: #ffffff;
+  background-color: #207cad;
+  text-decoration: none;
+  border-radius: 2px;
 }
 
 #georapbox-notes-panel table td.preview .georapbox-notes-options ul li a.georapbox-notes-extract {
-    background: url(../images/extract.svg) no-repeat 175px center;
+  background: url(../images/extract.svg) no-repeat 175px center;
 }
 #georapbox-notes-panel table td.preview .georapbox-notes-options ul li a.georapbox-notes-edit {
-    background: url(../images/edit.svg) no-repeat 175px center;
+  background: url(../images/edit.svg) no-repeat 175px center;
 }
 #georapbox-notes-panel table td.preview .georapbox-notes-options ul li a.georapbox-notes-delete {
-    background: url(../images/delete.svg) no-repeat 175px center;
+  background: url(../images/delete.svg) no-repeat 175px center;
 }
 #georapbox-notes-panel table td.preview .georapbox-notes-options ul li a.georapbox-notes-extract:hover {
-    background: #207cad url(../images/extract.active.svg) no-repeat 175px center;
+  background: #207cad url(../images/extract.active.svg) no-repeat 175px center;
 }
 #georapbox-notes-panel table td.preview .georapbox-notes-options ul li a.georapbox-notes-edit:hover {
-    background: #1f7b17 url(../images/edit.active.svg) no-repeat 175px center;
+  background: #1f7b17 url(../images/edit.active.svg) no-repeat 175px center;
 }
 #georapbox-notes-panel table td.preview .georapbox-notes-options ul li a.georapbox-notes-delete:hover {
-    background: #bf2323 url(../images/delete.active.svg) no-repeat 175px center;
+  background: #bf2323 url(../images/delete.active.svg) no-repeat 175px center;
 }
 
 #georapbox-notes-panel table td.preview article {
-    font-size: 14px;
-    padding: 5px 15px;
-    margin: 10px 0;
-    color: #121212;
-    background: #ffffff;
-    box-sizing: border-box;
-    border-radius: 3px;
-    border: 1px solid #BBBBBB;
-    outline: 0;
-    cursor: default;
+  font-size: 14px;
+  padding: 5px 15px;
+  margin: 10px 0;
+  color: #121212;
+  background: #ffffff;
+  box-sizing: border-box;
+  border-radius: 3px;
+  border: 1px solid #BBBBBB;
+  outline: 0;
+  cursor: default;
 }
 #georapbox-notes-panel table td.preview article strong {
-    color: #121212;
+  color: #121212;
 }
 #georapbox-notes-panel table td.preview article a {
-    color: #207cad;
+  color: #207cad;
 }
 #georapbox-notes-panel table td.id {
-    display: none;
+  display: none;
 }
 #georapbox-notes-panel .labelIcon {
-    padding: 15px 0 17px 0;
-    color: #ffffff;
-    background-color: #428bca;
-    border-radius: 3px;
-    text-align: center;
-    box-sizing: border-box;
-    margin-top: 9px;
-    -webkit-user-select: none;
+  padding: 15px 0 17px 0;
+  color: #ffffff;
+  background-color: #428bca;
+  border-radius: 3px;
+  text-align: center;
+  box-sizing: border-box;
+  margin-top: 9px;
+  -webkit-user-select: none;
 }
 
 /* New Note Dialog */
-.georapbox-notes-new-note-dialog {
-    width: 768px;
+.georapbox-notes-new-note-dialog,
+.georapbox-notes-import-notes-dialog {
+  width: 768px;
 }
 .georapbox-notes-new-note-dialog .modal-header h1 {
-    padding-bottom: 0;
-    line-height: 28px;
+  padding-bottom: 0;
+  line-height: 28px;
 }
 .georapbox-notes-new-note-dialog div[data-id="georapbox-hide-preview"] {
-    position: absolute;
-    top: 15px;
-    right: 15px;
+  position: absolute;
+  top: 15px;
+  right: 15px;
 }
-.georapbox-notes-new-note-dialog textarea {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 13px;
-    float: left;
-    width: 49%;
-    height: 150px;
-    max-height: 380px;
-    margin-top: 10px;
-    margin-right: 1%;
-    box-sizing: border-box;
-    resize: vertical;
+.georapbox-notes-new-note-dialog textarea,
+.georapbox-notes-import-notes-dialog textarea {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  float: left;
+  width: 49%;
+  height: 150px;
+  max-height: 380px;
+  margin-top: 10px;
+  margin-right: 1%;
+  box-sizing: border-box;
+  resize: vertical;
+}
+.georapbox-notes-import-notes-dialog textarea {
+  width: 100%;
 }
 .georapbox-notes-new-note-dialog div[data-id="georapbox-new-note-preview"] {
-    font-size: 14px;
-    float: left;
-    width: 49%;
-    min-height: 150px;
-    max-height: 380px;
-    margin-top: 10px;
-    color: #121212;
-    background: #ffffff;
-    border: 1px solid #BBBBBB;
-    border-radius: 5px;
-    padding: 5px 10px;
-    box-sizing: border-box;
-    overflow: auto;
-    resize: vertical;
+  font-size: 14px;
+  float: left;
+  width: 49%;
+  min-height: 150px;
+  max-height: 380px;
+  margin-top: 10px;
+  color: #121212;
+  background: #ffffff;
+  border: 1px solid #BBBBBB;
+  border-radius: 5px;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  overflow: auto;
+  resize: vertical;
 }
 .georapbox-notes-new-note-dialog div[data-id="georapbox-new-note-preview"] strong {
-    color: #121212;
+  color: #121212;
 }
 .georapbox-notes-new-note-dialog div[data-id="georapbox-new-note-preview"] a {
-    color: #207cad;
+  color: #207cad;
 }
 .georapbox-notes-new-note-dialog div[data-id="georapbox-new-note-preview"]:empty:not(:focus):before {
-    content: attr(data-ph);
-    color: #808080;
+  content: attr(data-ph);
+  color: #808080;
 }
 
 /* Delete note dialog */
 .georapbox-notes-delete-note-dialog {
-    width: 640px;
+  width: 640px;
 }
 
 /* Markdown theme */
@@ -267,18 +300,18 @@ button[data-id="georapbox-notes-new-btn"]:hover {
 .georapbox-notes-new-note-dialog div[data-id="georapbox-new-note-preview"] h4, #georapbox-notes-panel table td.preview article h4,
 .georapbox-notes-new-note-dialog div[data-id="georapbox-new-note-preview"] h5, #georapbox-notes-panel table td.preview article h5,
 .georapbox-notes-new-note-dialog div[data-id="georapbox-new-note-preview"] h6, #georapbox-notes-panel table td.preview article h6 {
-    color: #111;
-    line-height: 1em;
+  color: #111;
+  line-height: 1em;
 }
 .georapbox-notes-new-note-dialog div[data-id="georapbox-new-note-preview"] h1, #georapbox-notes-panel table td.preview article h1,
 .georapbox-notes-new-note-dialog div[data-id="georapbox-new-note-preview"] h2, #georapbox-notes-panel table td.preview article h2 {
-    line-height: 1.7em;
-    border-bottom: 1px solid #eee;
+  line-height: 1.7em;
+  border-bottom: 1px solid #eee;
 }
 .georapbox-notes-new-note-dialog div[data-id="georapbox-new-note-preview"] h4, #georapbox-notes-panel table td.preview article h4,
 .georapbox-notes-new-note-dialog div[data-id="georapbox-new-note-preview"] h5, #georapbox-notes-panel table td.preview article h5,
 .georapbox-notes-new-note-dialog div[data-id="georapbox-new-note-preview"] h6, #georapbox-notes-panel table td.preview article h6 {
-    font-weight: bold;
+  font-weight: bold;
 }
 .georapbox-notes-new-note-dialog div[data-id="georapbox-new-note-preview"] h1, #georapbox-notes-panel table td.preview article h1 { font-size: 2.00em; }
 .georapbox-notes-new-note-dialog div[data-id="georapbox-new-note-preview"] h2, #georapbox-notes-panel table td.preview article h2 { font-size: 1.75em; }
@@ -288,10 +321,10 @@ button[data-id="georapbox-notes-new-btn"]:hover {
 .georapbox-notes-new-note-dialog div[data-id="georapbox-new-note-preview"] h6, #georapbox-notes-panel table td.preview article h6 { font-size: 0.90em; }
 
 .georapbox-notes-new-note-dialog div[data-id="georapbox-new-note-preview"] code, #georapbox-notes-panel table td.preview article code {
-    font-size: 12px;
-    padding: 6px;
-    color: #333333;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 4px;
-    background: #f5f5f5;
+  font-size: 12px;
+  padding: 6px;
+  color: #333333;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  background: #f5f5f5;
 }
