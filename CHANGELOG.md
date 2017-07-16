@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.2.0
+- UI updates
+- Reorder panel header buttons
+
 ### 1.1.0
 - Export all saved notes to a JSON file.
 - Import notes from a file.
