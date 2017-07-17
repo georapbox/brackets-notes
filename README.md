@@ -4,9 +4,15 @@ Extension for [Brackets](https://github.com/adobe/brackets) that allows the user
 
 \* This small extension was firstly developed for my personal projects' needs but I thought I should share for anyone that might find it useful.
 
+**Tested with Brackets Sprint >=37**
+
+## Screenshot
+
+#### Dark Theme
 ![Brackets Notes - Dark Theme](brackets-notes-screenshot-dark.png)
 
-**Tested with Brackets Sprint >=37**
+#### Light Theme
+![Brackets Notes - Light Theme](brackets-notes-screenshot-light.png)
 
 ## Installation
 
