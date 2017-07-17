@@ -6,6 +6,14 @@ Extension for [Brackets](https://github.com/adobe/brackets) that allows the user
 
 **Tested with Brackets Sprint >=37**
 
+## Screenshot
+
+#### Dark Theme
+![Brackets Notes - Dark Theme](brackets-notes-screenshot-dark.png)
+
+#### Light Theme
+![Brackets Notes - Light Theme](brackets-notes-screenshot-light.png)
+
 ## Installation
 
 ### Git Clone
@@ -18,7 +26,7 @@ Extension for [Brackets](https://github.com/adobe/brackets) that allows the user
 3. Click "Install"
 
 ### How to use
-1. Under main menu select **View > Notes** or use the shortcut **"CTRL+ALT+Shift+N"** or click the **"Notes" icon** on the extension toolbar to open the Notes Panel.
+1. Under main menu select **View > Notes** or use the shortcut `CTRL`+`ALT`+`Shift`+`N` or click the **"Notes" icon** on the extension toolbar to open the Notes Panel.
 2. Click on the "NEW NOTE" button to open the dialog, type your note and click "Save".
 3. You can edit a note by clicking on the "Edit" icon or delete it by clicking on the "X" icon.
 4. Drag and drop notes to reorder them.
