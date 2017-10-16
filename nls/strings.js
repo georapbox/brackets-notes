@@ -8,6 +8,7 @@ define(function (require, exports, module) {
     fr: true,
     it: true,
     es: true,
-    cs: true
+    cs: true,
+    de: true
   };
 });
