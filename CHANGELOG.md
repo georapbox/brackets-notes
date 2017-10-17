@@ -1,6 +1,6 @@
 # Changelog
 
-### 1.2.0
+### 1.2.1
 - Added German translation #11
 
 ### 1.2.0
