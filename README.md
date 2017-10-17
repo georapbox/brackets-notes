@@ -43,6 +43,7 @@ The extension is translated in the following languages:
 - Spanish
 - French
 - Czech
+- German
 
 ## License
 
