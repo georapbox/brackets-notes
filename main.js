@@ -21,7 +21,9 @@ define(function (require, exports, module) {
   var reorder = require('services/reorder');
   var validateNotes = require('services/validate-notes');
   var uniqBy = require('utils/uniq-by');
+  var debounce = require('utils/debounce');
   var marked = require('lib/marked');
+  var DOMPurify = require('lib/dom-purify');
   var STORAGE_KEY = 'georapbox.notes';
   var STORAGE_KEY_VISIBLE = STORAGE_KEY + '.visible';
   var STORAGE_KEY_PREVIEW_VISIBLE = STORAGE_KEY + '.preview.visible';
@@ -168,6 +170,15 @@ define(function (require, exports, module) {
   }
 
   /**
+   * Renders markdown input as HTML in the output element.
+   * @param {HTMLElement} previewElement The element to render the HTML into.
+   * @param {String} markdown Markdown input string.
+   */
+  function previewMarkDown(previewElement, markdown) {
+    previewElement.html(marked(DOMPurify.sanitize(markdown)));
+  }
+
+  /**
    * Shows dialog for new note.
    */
   function showNewNoteModal() {
@@ -200,10 +211,6 @@ define(function (require, exports, module) {
 
     noteTextarea.focus();
 
-    function previewMarkDown(noteMarkup) {
-      preview.html(marked(noteMarkup.val()));
-    }
-
     function togglePreview(isVisible) {
       if (isVisible === true) {
         preview.show();
@@ -216,9 +223,9 @@ define(function (require, exports, module) {
       }
     }
 
-    dialog.on('keyup', 'textarea', function () {
-      previewMarkDown($(this));
-    });
+    dialog.on('keyup', 'textarea', debounce(function () {
+      previewMarkDown(preview, $(this).val());
+    }, 250));
 
     // Determine if Preview is visible or not.
     if (localStorage.getItem(STORAGE_KEY_PREVIEW_VISIBLE) === 'false') {
@@ -288,28 +295,17 @@ define(function (require, exports, module) {
 
   /**
    * Shows dialog for removing note.
-   * @param noteId {Number}
-   * @param noteDate {String}
-   * @param noteText {String}
    * @param callback {Function}
    */
-  function showDeleteNoteDialog(noteId, noteDate, noteText, callback) {
-    var dialog;
-    var promise = Dialogs.showModalDialogUsingTemplate(Mustache.render(deleteNoteTemplate, Strings))
-      .done(function (id) {
-        // if button OK clicked
-        if (id === Dialogs.DIALOG_BTN_OK) {
-          if (typeof callback === 'function' && typeof callback !== 'undefined') {
-            callback();
-          }
+  function showDeleteNoteDialog(callback) {
+    return Dialogs.showModalDialogUsingTemplate(Mustache.render(deleteNoteTemplate, Strings)).done(function (id) {
+      // if button OK clicked
+      if (id === Dialogs.DIALOG_BTN_OK) {
+        if (typeof callback === 'function' && typeof callback !== 'undefined') {
+          callback();
         }
-      });
-
-    dialog = $('.georapbox-notes-delete-note-dialog.instance');
-    dialog.find('.date').html(noteDate);
-    dialog.find('.note').html(noteText.substring(0, 200) + '...');
-
-    return promise;
+      }
+    });
   }
 
 /**
@@ -386,7 +382,7 @@ function createBottomPanel() {
 
         id = parseInt(id, 10);
 
-        showDeleteNoteDialog(id, date, note, function () {
+        showDeleteNoteDialog(function () {
           deleteNote(id);
           localStorage.removeItem(STORAGE_KEY);
           storageSaveObj(localStorage, STORAGE_KEY, _notes);
@@ -408,15 +404,11 @@ function createBottomPanel() {
         var noteValue, noteMarkup, noteId;
         var markupArea = self.parent().parent().find('article');
 
-        function previewMarkDown() {
-          markupArea.html(marked(self.val()));
-        }
-
         if (self.hasClass('editable')) {
           noteValue = self.val();
           noteId = parseInt(self.parent().parent().find('td.id').html(), 10);
           makeReadOnly(self);
-          previewMarkDown();
+          previewMarkDown(markupArea, self.val());
           noteMarkup = self.parent().next().find('article').html();
           updateNote(noteId, noteValue, noteMarkup);
           localStorage.removeItem(STORAGE_KEY);
